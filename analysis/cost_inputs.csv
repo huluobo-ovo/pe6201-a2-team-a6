@@ -1,0 +1,2 @@
+model,trials,input_tokens,output_tokens,input_price_per_m,output_price_per_m,successful_tasks,fallback_rate,fallback_cost_per_task,monthly_fixed_cost,monthly_volume,manual_task_cost,price_source,price_date,notes
+DUMMY_MODEL_REPLACE_BEFORE_FINAL,100,200000,50000,1.00,2.00,80,0.20,5.00,100.00,1000,5.00,DUMMY_ONLY_NOT_A_REAL_PRICE,2026-09-07,"Formula test only. Replace with live results and sourced prices before final report."

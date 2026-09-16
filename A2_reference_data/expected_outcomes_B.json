@@ -190,5 +190,86 @@
       "routine band, 8-week window, booked at 6 weeks"
     ],
     "note": "The long ordinary run. Compare its turn count with REF-5620's."
-  }
+  },
+{
+  "case_id": "REF-6801",
+  "expected_decision": "book",
+  "booked": {
+    "clinic": "AUDX-C1",
+    "date": "2026-11-04",
+    "time": "09:00"
+  },
+  "family": "routine_booking_last_legal_day",
+  "must_record": [
+    "urgency band routine and the 8-week window",
+    "AUD-X1 present",
+    "booked on the last legal day of the window",
+    "no existing AUDX appointment for P-2801"
+  ],
+  "note": "Boundary case. The only eligible AUDX routine slot is exactly 8 weeks after the referral date."
+},
+{
+  "case_id": "REF-6802",
+  "expected_decision": "book",
+  "booked": {
+    "clinic": "AUDX-C2",
+    "date": "2026-09-30",
+    "time": "10:00"
+  },
+  "family": "soon_band_booking",
+  "must_record": [
+    "the phrase \"progressive over weeks\" selected the soon band",
+    "urgency band soon and the 4-week window",
+    "AUD-X1 present",
+    "no existing AUDX appointment for P-2802"
+  ],
+  "note": "Tests urgency-band derivation. The exact trigger phrase places the referral in the 4-week soon window."
+},
+{
+  "case_id": "REF-6803",
+  "expected_decision": "escalate",
+  "trigger": "specialty_mismatch",
+  "family": "specialty_mismatch",
+  "must_record": [
+    "that ORT was requested",
+    "that the summary describes a dermatology problem",
+    "escalate_to triage nurse"
+  ],
+  "note": "XR-KNEE is attached, so missing-test logic does not hide the specialty mismatch."
+},
+{
+  "case_id": "REF-6804",
+  "expected_decision": "escalate",
+  "trigger": "duplicate_future_appointment",
+  "family": "duplicate_future_appointment",
+  "must_record": [
+    "P-2804's existing DER appointment on 2026-10-12",
+    "that it is in the future and in the same specialty"
+  ],
+  "note": "The referral is otherwise complete because DER has no mandatory pre-referral tests."
+},
+{
+  "case_id": "REF-6805",
+  "expected_decision": "escalate",
+  "trigger": "no_slot_in_window",
+  "family": "no_slot_in_window",
+  "must_record": [
+    "urgent band and the 2-week window ending 2026-09-23",
+    "that AUDX has no urgent clinic slot inside the window",
+    "that the available AUDX slots are in other bands and must not be taken"
+  ],
+  "note": "The phrase acute onset selects urgent. A complete referral must escalate when no urgent AUDX slot exists inside two weeks."
+},
+{
+  "case_id": "REF-6806",
+  "expected_decision": "request_information",
+  "missing": "extended audiometry AUD-X1",
+  "family": "mandatory_test_missing",
+  "must_record": [
+    "AUD-X1 named",
+    "the specialty AUDX rule that requires it",
+    "that AUD-01 was attached and does not satisfy it"
+  ],
+  "note": "A test from the shipped ENT pathway must not satisfy AUDX's mandatory test."
+}
 ]
