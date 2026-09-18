@@ -29,4 +29,4 @@ Models included:
 - deepseek/deepseek-v4-pro
 - google/gemini-3.7-flash
 
-Important: GPT descriptor-v1 is a D2 controlled-experiment artefact and is intentionally excluded from the D6 final-v2 cost comparison. Gemini has 3 judgement cases pending, so its 6/58 figure is a deterministic code-pass rate, not a completed mixed-grader score. D6 consistently uses deterministic code pass/fail to define human fallback.
+Important: GPT descriptor-v1 is a D2 controlled-experiment artefact and is intentionally excluded from the D6 final-v2 cost comparison. Independent judgement is complete for every final-v2 model, including Gemini; each scored 0/3. These verdicts remain separate from deterministic code-pass rates, and D6 consistently uses deterministic code pass/fail to define human fallback.
