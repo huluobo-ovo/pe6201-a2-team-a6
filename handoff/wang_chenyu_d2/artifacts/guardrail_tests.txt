@@ -1,0 +1,20 @@
+test_case_01_step_cap_allows_exact_limit (test_guardrail_cases.GuardrailCasesTests.test_case_01_step_cap_allows_exact_limit) ... ok
+test_case_02_step_cap_stops_first_turn_over_limit (test_guardrail_cases.GuardrailCasesTests.test_case_02_step_cap_stops_first_turn_over_limit) ... ok
+test_case_03_zero_step_cap_rejects_any_turn (test_guardrail_cases.GuardrailCasesTests.test_case_03_zero_step_cap_rejects_any_turn) ... ok
+test_case_04_budget_allows_exact_ceiling (test_guardrail_cases.GuardrailCasesTests.test_case_04_budget_allows_exact_ceiling) ... ok
+test_case_05_budget_stops_first_token_over_ceiling (test_guardrail_cases.GuardrailCasesTests.test_case_05_budget_stops_first_token_over_ceiling) ... ok
+test_case_06_fractional_token_count_over_ceiling_stops (test_guardrail_cases.GuardrailCasesTests.test_case_06_fractional_token_count_over_ceiling_stops) ... ok
+test_case_07_identical_action_is_stopped (test_guardrail_cases.GuardrailCasesTests.test_case_07_identical_action_is_stopped) ... ok
+test_case_08_nested_dict_order_is_same_action (test_guardrail_cases.GuardrailCasesTests.test_case_08_nested_dict_order_is_same_action) ... ok
+test_case_09_mutating_original_args_does_not_alias_snapshot (test_guardrail_cases.GuardrailCasesTests.test_case_09_mutating_original_args_does_not_alias_snapshot) ... ok
+test_case_10_suggest_mode_holds_irreversible_action (test_guardrail_cases.GuardrailCasesTests.test_case_10_suggest_mode_holds_irreversible_action) ... ok
+test_case_11_confirm_mode_requires_positive_human_approval (test_guardrail_cases.GuardrailCasesTests.test_case_11_confirm_mode_requires_positive_human_approval) ... ok
+test_case_12_act_mode_passes_gate_without_callback (test_guardrail_cases.GuardrailCasesTests.test_case_12_act_mode_passes_gate_without_callback) ... ok
+test_case_13_hostile_summary_cannot_bypass_suggest_gate (test_guardrail_cases.GuardrailCasesTests.test_case_13_hostile_summary_cannot_bypass_suggest_gate) ... ok
+test_case_14_prompt_injection_summary_cannot_avoid_duplicate_stop (test_guardrail_cases.GuardrailCasesTests.test_case_14_prompt_injection_summary_cannot_avoid_duplicate_stop) ... ok
+test_case_15_hostile_free_text_cannot_turn_failed_approval_into_pass (test_guardrail_cases.GuardrailCasesTests.test_case_15_hostile_free_text_cannot_turn_failed_approval_into_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.001s
+
+OK

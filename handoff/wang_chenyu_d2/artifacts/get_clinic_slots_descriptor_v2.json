@@ -1,0 +1,12 @@
+{
+  "name": "get_clinic_slots",
+  "purpose": "Find appointment slots that actually exist and are free, for one specialty in one urgency band inside a date window.",
+  "when": "AFTER all four gates pass. Never before: a red flag or missing mandatory test ends the run, so an earlier slot query is both wasted and a wrong record.",
+  "args": {
+    "specialty": "str, the code from the referral, e.g. OPH",
+    "band": "str, REQUIRED; urgent|soon|routine from check_referral_criteria, not the model's own judgement",
+    "from/to": "ISO dates for the clinical window measured from as_of()"
+  },
+  "returns": "list of {clinic, specialty, band, date, time, capacity_remaining}; only rows inside the requested band/window with capacity above zero, sorted in fixture order",
+  "failure": "An EMPTY LIST is a valid answer meaning escalate with trigger no_slot_in_window. Never widen the window or drop the band. A capacity_remaining 0 row is full and is filtered out; it is not permission to book another band."
+}

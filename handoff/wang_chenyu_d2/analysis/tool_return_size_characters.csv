@@ -1,0 +1,11 @@
+﻿descriptor,tool,successful_calls,mean_characters,min_characters,max_characters,measurement
+v1,as_of,4,12.0,12,12,Unicode characters; compact sorted JSON; NOT API tokens
+v1,check_referral_criteria,53,111.36,96,152,Unicode characters; compact sorted JSON; NOT API tokens
+v1,get_referral,57,296.88,234,394,Unicode characters; compact sorted JSON; NOT API tokens
+v1,lookup_patient,53,180.09,164,228,Unicode characters; compact sorted JSON; NOT API tokens
+v2,as_of,9,12.0,12,12,Unicode characters; compact sorted JSON; NOT API tokens
+v2,book_slot,4,93.25,93,94,Unicode characters; compact sorted JSON; NOT API tokens
+v2,check_referral_criteria,54,112.83,96,152,Unicode characters; compact sorted JSON; NOT API tokens
+v2,get_clinic_slots,5,159.4,111,227,Unicode characters; compact sorted JSON; NOT API tokens
+v2,get_referral,57,296.96,234,394,Unicode characters; compact sorted JSON; NOT API tokens
+v2,lookup_patient,53,179.02,164,228,Unicode characters; compact sorted JSON; NOT API tokens

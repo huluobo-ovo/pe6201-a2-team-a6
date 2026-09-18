@@ -1,0 +1,13 @@
+{
+  "started_at": "2026-09-17T12:37:02.460905+00:00",
+  "provider": "OpenRouter",
+  "model": "google/gemini-3.7-flash",
+  "documented_version": "Gemini 3.7 Flash",
+  "base_url": "https://openrouter.ai/api/v1",
+  "freeze_sha": "e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+  "adapter_sha256": "fc11cbd7653e34e41193172c84005951baba5a687929cb6c12f06c07c681b59d",
+  "changes": "External BASE_URL/API_KEY override and append-only response/trial logging. Frozen source, prompt, cases, caps and parsing unchanged. Provider default thinking mode; no thinking override.",
+  "baseline_pricing": "USD per million baseline input 0.75, output 3.75. Provider cost retained separately.",
+  "pricing_source": "https://openrouter.ai/google/gemini-3.7-flash",
+  "retry_policy": "No retries or selective reruns"
+}

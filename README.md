@@ -41,6 +41,11 @@ Report-ready model aggregation is under `artifacts/live_battery_summary.*`.
 Independent prose-evidence verdicts are in
 `artifacts/judgement_results.json`, keeping the frozen raw runs immutable.
 
+Wang Chenyu's original D2 handoff, including report text, tool contracts,
+Gemini audit material and an offline verifier, is preserved without replacing
+canonical project files under `handoff/wang_chenyu_d2/`. It was supplied by
+Wang Chenyu and uploaded by Yang Ruijia through the `huluobo-ovo` account.
+
 The report-ready D0 argument is in `docs/D0_why_an_agent.md`. Its reliability
 arithmetic is reproducible from the frozen GPT-5.4 v2 live result:
 
