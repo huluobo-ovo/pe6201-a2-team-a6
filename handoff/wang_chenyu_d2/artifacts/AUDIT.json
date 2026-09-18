@@ -1,0 +1,40 @@
+{
+  "verified": true,
+  "models": [
+    "google/gemini-3.7-flash"
+  ],
+  "summary": {
+    "cases": 30,
+    "negative_cases": 14,
+    "trials": 58,
+    "passed": 6,
+    "pass_rate": 0.10344827586206896,
+    "code_pass_rate": 0.10344827586206896,
+    "negative_trials": 42,
+    "negative_passed": 4,
+    "negative_code_pass_rate": 0.09523809523809523,
+    "judgement_cases": 3,
+    "judgement_pending": 3,
+    "median_turns": 1.0,
+    "worst_case_turns": 4,
+    "step_cap_hits": 0,
+    "tokens_in": 132992,
+    "tokens_out": 17498,
+    "error_trials": 49,
+    "cost_usd": 0.165363,
+    "provider_reported_cost_usd": 0.1653615
+  },
+  "api_responses": 135,
+  "raw_completion_tokens": 17498,
+  "additional_output_tokens_from_total_minus_input": 0,
+  "normalized_output_rule": "Unchanged API prompt_tokens/completion_tokens; no normalization",
+  "errors": {
+    "model did not return parseable JSON": 47,
+    "live API returned empty assistant content": 2
+  },
+  "provider_billed_cost_available": true,
+  "provider_zero_warning": "Provider reported costs retained when returned",
+  "billing_basis": "OpenRouter baseline $0.75/M input and $3.75/M output; provider reported cost separate.",
+  "provider_override": "Frozen OpenRouter endpoint and unchanged token accounting; external append-only evidence capture",
+  "judgement": "3 cases pending, not included in code-check pass rate"
+}

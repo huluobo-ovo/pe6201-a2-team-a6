@@ -1,0 +1,2 @@
+﻿model,trials,code_passed,code_pass_rate,negative_passed,negative_trials,input_tokens,output_tokens,error_trials,json_parse_errors,empty_response_errors,harness_summary_cost_usd,exact_price_book_cost_usd,provider_reported_cost_usd,judgement_passed,judgement_total,freeze_sha
+google/gemini-3.7-flash,58,6,0.10344827586206896,4,42,132992,17498,49,47,2,0.165363,0.1653615,0.1653615,0,3,e36bb1b2fcad625ed944e7df863165d95c0ef53f

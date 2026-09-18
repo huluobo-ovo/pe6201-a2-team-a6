@@ -1,0 +1,2 @@
+﻿model,trials,input_tokens,output_tokens,input_price_per_m,output_price_per_m,successful_tasks,fallback_rate,fallback_cost_per_task,monthly_fixed_cost,monthly_volume,manual_task_cost,price_source,price_date,notes
+google/gemini-3.7-flash,58,132992,17498,0.75,3.75,6,0.896551724137931,6.0,150.0,1000,5.0,https://openrouter.ai/google/gemini-3.7-flash,2026-09-17,"Final Gemini v2 via OpenRouter; fallback=not code-pass; provider_cost=0.1653615; harness rounded sum=0.165363; business assumptions copied from Liu D6, not observations; judgement completed 0/3."
