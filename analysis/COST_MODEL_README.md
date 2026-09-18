@@ -22,7 +22,7 @@ This final ledger uses five compatible descriptor-v2 live batteries. All use the
 
 `fallback_rate = (trials - deterministic_code_passes) / trials`
 
-This gives a consistent D6 operational convention across all five models. Pending judgement cases are not silently converted into passes or failures beyond the deterministic code-check result already recorded in each live result.
+This gives a consistent D6 operational convention across all five models. Independent judgement is now complete for every final v2 result, and each model passed 0/3 selected prose-evidence cases. Those verdicts remain a separately reported quality measure: the D6 ledger does not silently convert them into additional passes or failures beyond the deterministic code-check result already recorded in each live result. The `judgement_pending` column in `model_cost_audit.csv` preserves the number of items originally emitted to each raw result's judgement queue; it is not the current completion status. Current completion and verdict counts are recorded in `artifacts/judgement_results.json` and `artifacts/live_battery_summary.csv`.
 
 ## Business scenario assumptions
 
