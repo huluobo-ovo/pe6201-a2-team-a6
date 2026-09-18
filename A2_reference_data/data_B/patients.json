@@ -132,43 +132,5 @@
     "patient_id": "P-2901",
     "date_of_birth": "1975-09-22",
     "existing_appointments": []
-  },
-  {
-    "patient_id": "P-2101",
-    "date_of_birth": "1986-02-17",
-    "existing_appointments": [
-      {
-        "specialty": "OPH",
-        "clinic": "OPH-C2",
-        "date": "2026-10-02"
-      }
-    ]
-  },
-  {
-    "patient_id": "P-2202",
-    "date_of_birth": "1988-04-19",
-    "existing_appointments": [
-      {
-        "specialty": "ENT",
-        "clinic": "ENT-C1",
-        "date": "2026-06-01"
-      },
-      {
-        "specialty": "OPH",
-        "clinic": "OPH-C2",
-        "date": "2026-10-02"
-      }
-    ]
-  },
-  {
-    "patient_id": "P-2301",
-    "date_of_birth": "1989-06-12",
-    "existing_appointments": [
-      {
-        "specialty": "ORT",
-        "clinic": "ORT-C1",
-        "date": "2026-09-09"
-      }
-    ]
   }
 ]
