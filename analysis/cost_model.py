@@ -1,8 +1,8 @@
 """PE6201 A2 D6 cost model.
 
 This module converts live-model evaluation totals into a reproducible cost
-ledger. The example CSV bundled with it is explicitly dummy data and must be
-replaced by real live results before the final report.
+ledger. The bundled CSV contains the final four compatible live-battery inputs and
+explicit business scenario assumptions used for the D6 report.
 """
 
 from __future__ import annotations
@@ -250,7 +250,7 @@ def main() -> None:
     output_csv = here / "cost_summary.csv"
     rows = run_cost_model(input_csv, output_csv)
     print(f"Wrote {len(rows)} rows to {output_csv}")
-    print("IMPORTANT: Replace DUMMY inputs with live results before final reporting.")
+    print("D6 final ledger generated from live-battery inputs and explicit scenario assumptions.")
 
 
 if __name__ == "__main__":
