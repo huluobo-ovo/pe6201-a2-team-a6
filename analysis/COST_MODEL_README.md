@@ -1,59 +1,66 @@
-# D6 Cost Model — Liu Xuanlin
+# PE6201 A2 — D6 Final Cost Model (5 final-v2 models)
 
-## Purpose
-This folder contains the reproducible D6 cost analysis for PE6201 A2, Team A-6, Problem B.
+Owner: Liu Xuanlin  
+Problem: B — Outpatient Referral Coordination  
+Freeze SHA: `e36bb1b2fcad625ed944e7df863165d95c0ef53f`
 
-The current `cost_inputs.csv` contains **dummy data only for formula testing**. Dummy values must be replaced with the team's frozen live-model results and sourced model prices before the final report.
+## Evidence basis
+
+This final ledger uses five compatible descriptor-v2 live batteries. All use the same freeze/source commit, prompt v2, descriptor v2, main tool contract, exact 30-case evaluation set, 58-trial policy and API-reported token measurement.
+
+| Model | Code pass | Fallback | Input tokens | Output tokens | Provider API cost | Monthly cost* | Break-even* |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| OpenAI GPT-5.4 | 25/58 = 43.1% | 56.9% | 287,085 | 10,898 | US$0.88 | US$3,578.99 | 19.4% |
+| Moonshot Kimi K2.6 | 15/58 = 25.9% | 74.1% | 263,325 | 52,112 | US$0.24 | US$4,603.96 | 19.3% |
+| Anthropic Claude Sonnet 4.6 | 10/58 = 17.2% | 82.8% | 233,897 | 13,221 | US$0.90 | US$5,131.03 | 19.4% |
+| DeepSeek V4 Pro | 4/58 = 6.9% | 93.1% | 196,625 | 24,437 | US$0.18 | US$5,739.89 | 19.2% |
+| Google Gemini 3.7 Flash | 6/58 = 10.3% | 89.7% | 132,992 | 17,498 | US$0.17 | US$5,532.16 | 19.2% |
+
+\* Monthly cost and break-even use the explicit business scenario assumptions below.
+
+## Fallback definition
+
+`fallback_rate = (trials - deterministic_code_passes) / trials`
+
+This gives a consistent D6 operational convention across all five models. Pending judgement cases are not silently converted into passes or failures beyond the deterministic code-check result already recorded in each live result.
+
+## Business scenario assumptions
+
+These are scenario assumptions, not observed hospital costs:
+
+- Human fallback cost: US$6.00 per failed task
+- Manual-only task cost: US$5.00 per task
+- Monthly fixed AI/monitoring cost: US$150
+- Monthly task volume: 1,000 referrals
+
+Manual-only monthly baseline = US$5,000.00.
+
+The Gemini handoff's `gemini_cost_inputs_for_D6.csv` uses the same assumption set and explicitly labels them as copied D6 business assumptions rather than observations.
+
+## Costing basis
+
+The reproducible ledger uses exact price-book model cost:
+
+`input_tokens × input_price_per_m / 1,000,000 + output_tokens × output_price_per_m / 1,000,000`
+
+Measured tokens and run-time price metadata come from each final live JSON. `model_cost_audit.csv` also preserves the harness-reported total and provider-reported API cost for audit.
+
+## Sensitivity and break-even
+
+`cost_summary.csv` includes base, success −10 percentage points, and success +10 percentage points. Success is clamped to [0,1], and fallback moves inversely.
+
+Under the stated assumptions, a +10pp success improvement reduces expected fallback spending by:
+
+`1,000 × 10% × US$6 = US$600/month`.
+
+Therefore the success/fallback rate is the main cost lever in this scenario; raw token-price differences are much smaller than the human fallback component.
 
 ## Files
-- `cost_model.py` — reads the cost inputs, calculates the cost ledger, ±10 percentage-point success-rate sensitivity, and break-even success rate.
-- `cost_inputs.csv` — input assumptions and live-model totals.
-- `cost_summary.csv` — generated output table.
 
-## Input fields
-- `model`: live model name/ID.
-- `trials`: number of live evaluation trials.
-- `input_tokens`, `output_tokens`: measured live token usage across those trials.
-- `input_price_per_m`, `output_price_per_m`: USD price per 1 million tokens.
-- `successful_tasks`: number of successful tasks in the trials.
-- `fallback_rate`: share of tasks routed to human fallback.
-- `fallback_cost_per_task`: assumed USD cost of one human fallback.
-- `monthly_fixed_cost`: assumed monthly fixed system cost in USD.
-- `monthly_volume`: expected tasks per month.
-- `manual_task_cost`: USD cost of handling one task manually; used as the break-even comparator.
-- `price_source`, `price_date`: source and date for the model price.
-- `notes`: assumptions or caveats.
-
-## Calculations
-1. **Variable model cost** = input-token cost + output-token cost.
-2. **Expected fallback cost** = trials × fallback rate × fallback cost per task.
-3. **Allocated fixed cost** = monthly fixed cost × trials / monthly volume.
-4. **Cost per successful task** = total trial-set cost / successful tasks.
-5. **Monthly cost** scales variable and fallback costs to monthly volume, then adds monthly fixed cost.
-6. **Sensitivity** reruns the ledger at success rate −10 percentage points and +10 percentage points. For these sensitivity rows only, fallback rate moves inversely by the same amount.
-7. **Break-even success rate** is the AI success rate where expected AI task cost equals the manual-only task cost, assuming unsuccessful AI tasks fall back to a human.
-
-## Run
-From the repository root:
-
-```bash
-python3 analysis/cost_model.py
-```
-
-Expected message:
-
-```text
-Wrote 3 rows to .../analysis/cost_summary.csv
-IMPORTANT: Replace DUMMY inputs with live results before final reporting.
-```
-
-## Before final submission
-Replace every dummy value with real or explicitly agreed data:
-1. Freeze commit/model ID and live trial count.
-2. Measured input/output tokens from the live battery.
-3. Model prices in USD per 1M tokens, with source URL/reference and access date.
-4. Actual success count and fallback rate from the frozen results.
-5. Team-agreed fallback cost, fixed cost, monthly volume, and manual-task comparator.
-6. Re-run `python3 analysis/cost_model.py` and use the regenerated `cost_summary.csv` in the report.
-
-Do not use scripted token estimates as live measured usage.
+- `cost_model.py` — reproducible formulas
+- `cost_inputs.csv` — five final-v2 model inputs
+- `cost_summary.csv` — base and ±10pp sensitivity
+- `model_cost_audit.csv` — source/run/cost audit
+- `COMPATIBILITY_CHECK.md` — five-model compatibility evidence
+- `D6_report_text.md` — report-ready wording
+- `PE6201_D6_Cost_Model_Final_5Models.xlsx` — formatted workbook
