@@ -1,12 +1,5 @@
 # D4 and D5 Evaluation Handoff
 
-> Historical freeze notice (2026-09-18): this document and the existing live
-> result files describe the 30-case freeze at `e36bb1b...`. The repository's
-> current reviewed evaluation set has since expanded to 50 cases by integrating
-> Yang Ruijia, Wang Chenyu and Hao Qi proposals. Do not combine the old 30-case
-> live measurements with the expanded set. Regenerate a new freeze and rerun all
-> live-model batteries before replacing D5(b) or D6 report figures.
-
 Owner: Fan Yupei
 Branch: `feature/evaluation`
 

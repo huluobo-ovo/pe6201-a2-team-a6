@@ -1,10 +1,5 @@
 # Five-model Final-v2 Compatibility Check
 
-> Historical 30-case compatibility record. The checks below establish
-> comparability only within freeze `e36bb1b...`; they do not establish
-> compatibility with the current expanded 50-case evaluation set. A fresh
-> five-model battery is required on the new common freeze.
-
 All five D6 base-comparison runs passed the common-control compatibility check.
 
 - freeze_sha: PASS

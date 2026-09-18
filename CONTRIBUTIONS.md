@@ -18,13 +18,14 @@ Git commits.
 
 ## Evaluation-case status
 
-The reviewed 50-case evaluation set contains the 30 earlier cases plus 20
-team-owned additions: eight by Yang Ruijia (`REF-6101`–`REF-6108`), seven by
-Wang Chenyu (`REF-6201`–`REF-6206`, `REF-6208`) and five by Hao Qi (`REF-6301`,
-`REF-6302`, `REF-6303`, `REF-6305`, `REF-6307`). Four additional proposals are
-preserved as supplemental, unexecuted cases because the brief caps the set at
-50 and two would conflict with existing frozen semantics. Selection and review
-adjustments are recorded in `artifacts/team_case_integration_summary.*`.
+The final frozen 30-case evaluation set contains 15 instructor cases, eight
+cases attributed to Fan Yupei, six attributed to Liu Xuanlin, and one D4
+integration case. Yang Ruijia, Wang Chenyu and Hao Qi also delivered eight
+proposals each. Their source files are retained as supplemental contribution
+evidence in `evaluation_case_proposals_yang_ruijia.json`,
+`evaluation_case_proposals_wang_chenyu.json`, and
+`evaluation_case_proposals_hao_qi.json`. None of those 24 proposals is part of
+the frozen fixtures, D4 denominator, or D5 live runs.
 
 ## Live-model status
 

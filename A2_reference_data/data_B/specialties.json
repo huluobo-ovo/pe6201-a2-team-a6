@@ -141,37 +141,5 @@
       "throat",
       "tonsil"
     ]
-  },
-  {
-    "code": "NEU",
-    "name": "Neurology",
-    "mandatory_tests": [],
-    "red_flag_terms": [
-      "thunderclap headache",
-      "new focal weakness",
-      "first seizure"
-    ],
-    "treats": [
-      "neurology",
-      "neurological",
-      "headache",
-      "migraine"
-    ]
-  },
-  {
-    "code": "RHE",
-    "name": "Rheumatology",
-    "mandatory_tests": [],
-    "red_flag_terms": [
-      "rapidly worsening joint swelling"
-    ],
-    "treats": [
-      "joint",
-      "hip",
-      "shoulder",
-      "back",
-      "spine",
-      "arthritis"
-    ]
   }
 ]

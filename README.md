@@ -17,35 +17,17 @@ run once and negative cases run three times. It writes
 counts, code-check pass rates, negative-only results, turns, tokens, costs,
 errors, per-case rows, and the separate judgement queue.
 
-The current reviewed set contains 50 cases. Twenty team-owned proposals were
-integrated after validation: eight from Yang Ruijia, seven from Wang Chenyu and
-five from Hao Qi. Four additional proposals remain documented but unexecuted so
-the set does not exceed the assignment's 50-case maximum. See
-`artifacts/team_case_integration_summary.md`. To regenerate the expanded data
-and labels from the committed proposal sources:
-
-```bash
-python3 A2_reference_data/make_fixtures_B.py
-python3 A2_reference_data/check_my_data.py
-```
-
-The committed live-model files were produced on the earlier 30-case freeze.
-They remain immutable historical evidence and must not be described as covering
-the expanded 50-case set. A new compatible D5(b) battery requires every model to
-run against the new freeze and exact 50-case list.
-
-The expanded-set baseline is recorded separately in
-`artifacts/expanded_50_case_freeze_manifest.json` and
-`artifacts/expanded_50_case_results.json`: all 90 scripted trials pass, while
-the three prose-evidence judgement items remain pending. These files do not
-replace the required five-model live battery.
+The submitted evaluation set is the frozen 30-case set at commit
+`e36bb1b2fcad625ed944e7df863165d95c0ef53f`. Additional case files from Yang
+Ruijia, Wang Chenyu and Hao Qi are retained as proposals only; they are not
+fixtures, are not counted in D4/D5, and were not used by the live batteries.
+See `artifacts/team_case_integration_summary.md`.
 
 ## Which result file to use
 
 | Purpose | File |
 | --- | --- |
-| Current expanded 50-case scripted result, D5(a) | `artifacts/expanded_50_case_results.json` |
-| Historical 30-case scripted result | `artifacts/results.json` |
+| School-required default scripted result, D5(a) | `artifacts/results.json` |
 | Fan Yupei final GPT-5.4 live result, D5(b) | `artifacts/live_results/fan_yupei_openai_gpt-5.4_v2.json` |
 | Controlled descriptor-v1 baseline, D2(b) | `artifacts/live_results/fan_yupei_openai_gpt-5.4_v1.json` |
 | Liu Xuanlin D6 input and per-trial fallback audit | `artifacts/fan_yupei_live_handoff.json` and `artifacts/live_cost_handoff.csv` |

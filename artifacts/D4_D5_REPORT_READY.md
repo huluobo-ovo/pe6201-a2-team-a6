@@ -1,11 +1,5 @@
 # D4/D5 Report-Ready Findings — Fan Yupei
 
-> Historical result: every number below belongs to the 30-case freeze
-> `e36bb1b...`. The current reviewed set contains 50 cases. These figures remain
-> useful as an auditable earlier experiment, but they are not the final evidence
-> for the expanded set; all live-model arms must be rerun on one new common
-> freeze before submission.
-
 Freeze: `e36bb1b2fcad625ed944e7df863165d95c0ef53f`
 
 ## Evaluation set and method
