@@ -120,5 +120,26 @@
       "tonsil",
       "voice"
     ]
+  },
+  {
+    "code": "AUDX",
+    "name": "Audiology Extended",
+    "mandatory_tests": [
+      {
+        "code": "AUD-X1",
+        "name": "extended audiometry"
+      }
+    ],
+    "red_flag_terms": [
+      "sudden hearing loss",
+      "airway compromise"
+    ],
+    "treats": [
+      "ear",
+      "hearing",
+      "sinus",
+      "throat",
+      "tonsil"
+    ]
   }
 ]

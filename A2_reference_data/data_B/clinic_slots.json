@@ -174,5 +174,21 @@
     "date": "2026-11-10",
     "time": "09:40",
     "capacity_remaining": 2
+  },
+  {
+    "clinic": "AUDX-C1",
+    "specialty": "AUDX",
+    "band": "routine",
+    "date": "2026-11-04",
+    "time": "09:00",
+    "capacity_remaining": 1
+  },
+  {
+    "clinic": "AUDX-C2",
+    "specialty": "AUDX",
+    "band": "soon",
+    "date": "2026-09-30",
+    "time": "10:00",
+    "capacity_remaining": 1
   }
 ]

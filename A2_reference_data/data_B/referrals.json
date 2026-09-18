@@ -173,5 +173,181 @@
       "NASO-02"
     ],
     "tests_attached_on": "2026-08-24"
+  },
+  {
+    "referral_id": "REF-6401",
+    "patient_id": "P-2401",
+    "referring_clinic": "Queenstown Polyclinic",
+    "specialty": "OPH",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Right-eye vision has been worsening over days. Query retinal review.",
+    "tests_attached": [
+      "VF-01"
+    ],
+    "tests_attached_on": "2026-09-08"
+  },
+  {
+    "referral_id": "REF-6402",
+    "patient_id": "P-2402",
+    "referring_clinic": "Hougang Polyclinic",
+    "specialty": "CARD",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Recurrent palpitations over three weeks without symptoms at rest.",
+    "tests_attached": [
+      "ECG-12",
+      "BNP-01"
+    ],
+    "tests_attached_on": "2026-09-07"
+  },
+  {
+    "referral_id": "REF-6403",
+    "patient_id": "P-2403",
+    "referring_clinic": "Geylang Polyclinic",
+    "specialty": "ORT",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Left knee pain not responding to treatment and limiting stairs.",
+    "tests_attached": [
+      "XR-KNEE"
+    ],
+    "tests_attached_on": "2026-09-06"
+  },
+  {
+    "referral_id": "REF-6404",
+    "patient_id": "P-2404",
+    "referring_clinic": "Pioneer Polyclinic",
+    "specialty": "DER",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Recurrent eczema on both hands despite regular emollients.",
+    "tests_attached": []
+  },
+  {
+    "referral_id": "REF-6405",
+    "patient_id": "P-2405",
+    "referring_clinic": "Marine Parade Polyclinic",
+    "specialty": "ENT",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Stable gradual hearing reduction in the left ear for two years.",
+    "tests_attached": [
+      "AUD-01",
+      "NASO-02"
+    ],
+    "tests_attached_on": "2026-09-04"
+  },
+  {
+    "referral_id": "REF-6406",
+    "patient_id": "P-2406",
+    "referring_clinic": "Bukit Panjang Polyclinic",
+    "specialty": "ORT",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Chronic stable right shoulder pain for nine months.",
+    "tests_attached": [
+      "XR-KNEE"
+    ],
+    "tests_attached_on": "2026-09-01"
+  },
+  {
+    "referral_id": "REF-6407",
+    "patient_id": "P-2407",
+    "referring_clinic": "Toa Payoh Polyclinic",
+    "specialty": "CARD",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Stable cardiac murmur found during a routine health review.",
+    "tests_attached": [
+      "ECG-12",
+      "BNP-01"
+    ],
+    "tests_attached_on": "2026-09-05"
+  },
+  {
+    "referral_id": "REF-6408",
+    "patient_id": "P-2408",
+    "referring_clinic": "Ang Mo Kio Polyclinic",
+    "specialty": "DER",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Stable plaque psoriasis on both elbows for six months.",
+    "tests_attached": []
+  },
+  {
+    "referral_id": "REF-6801",
+    "patient_id": "P-2801",
+    "referring_clinic": "Jurong Polyclinic",
+    "specialty": "AUDX",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Persistent hearing difficulty in the left ear.",
+    "tests_attached": [
+      "AUD-X1"
+    ],
+    "tests_attached_on": "2026-09-08"
+  },
+  {
+    "referral_id": "REF-6802",
+    "patient_id": "P-2802",
+    "referring_clinic": "Tampines Polyclinic",
+    "specialty": "AUDX",
+    "date_received": "2026-09-09",
+    "clinical_summary": "progressive over weeks hearing difficulty in the right ear.",
+    "tests_attached": [
+      "AUD-X1"
+    ],
+    "tests_attached_on": "2026-09-08"
+  },
+  {
+    "referral_id": "REF-6803",
+    "patient_id": "P-2803",
+    "referring_clinic": "Woodlands Polyclinic",
+    "specialty": "ORT",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Persistent itchy skin rash and eczema on both arms.",
+    "tests_attached": [
+      "XR-KNEE"
+    ],
+    "tests_attached_on": "2026-09-08"
+  },
+  {
+    "referral_id": "REF-6804",
+    "patient_id": "P-2804",
+    "referring_clinic": "Bedok Polyclinic",
+    "specialty": "DER",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Persistent eczema on both hands.",
+    "tests_attached": [],
+    "tests_attached_on": "2026-09-09"
+  },
+  {
+    "referral_id": "REF-6805",
+    "patient_id": "P-2805",
+    "referring_clinic": "Clementi Polyclinic",
+    "specialty": "AUDX",
+    "date_received": "2026-09-09",
+    "clinical_summary": "acute onset hearing difficulty in the left ear.",
+    "tests_attached": [
+      "AUD-X1"
+    ],
+    "tests_attached_on": "2026-09-09"
+  },
+  {
+    "referral_id": "REF-6806",
+    "patient_id": "P-2806",
+    "referring_clinic": "Sengkang Polyclinic",
+    "specialty": "AUDX",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Long-standing hearing difficulty in both ears.",
+    "tests_attached": [
+      "AUD-01"
+    ],
+    "tests_attached_on": "2026-09-08"
+  },
+  {
+    "referral_id": "REF-6901",
+    "patient_id": "P-2901",
+    "referring_clinic": "Bukit Merah Polyclinic",
+    "specialty": "CARD",
+    "date_received": "2026-09-09",
+    "clinical_summary": "Rapidly worsening palpitations and breathlessness over five days.",
+    "tests_attached": [
+      "ECG-12",
+      "BNP-01"
+    ],
+    "tests_attached_on": "2026-09-08"
   }
 ]

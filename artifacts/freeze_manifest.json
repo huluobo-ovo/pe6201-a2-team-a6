@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "generated_at_utc": "2026-09-14T19:01:11.900863+00:00",
+  "freeze": {
+    "commit_sha": "e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+    "source_head_sha": "e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+    "checkout_state": "detached",
+    "intended_branch": "feature/evaluation",
+    "main_base_sha": "9a73ba90fedf5a848b46face38607b8e16eb0c3a",
+    "working_tree_clean_before_generation": true
+  },
+  "evaluation_set": {
+    "problem": "B",
+    "case_count": 30,
+    "negative_case_count": 14,
+    "ordinary_trials_per_case": 1,
+    "negative_trials_per_case": 3,
+    "total_trials": 58,
+    "case_ids": [
+      "REF-5590",
+      "REF-5602",
+      "REF-5614",
+      "REF-5620",
+      "REF-5631",
+      "REF-5645",
+      "REF-5658",
+      "REF-5663",
+      "REF-5671",
+      "REF-5684",
+      "REF-5697",
+      "REF-5703",
+      "REF-5711",
+      "REF-5725",
+      "REF-5738",
+      "REF-6401",
+      "REF-6402",
+      "REF-6403",
+      "REF-6404",
+      "REF-6405",
+      "REF-6406",
+      "REF-6407",
+      "REF-6408",
+      "REF-6801",
+      "REF-6802",
+      "REF-6803",
+      "REF-6804",
+      "REF-6805",
+      "REF-6806",
+      "REF-6901"
+    ],
+    "negative_case_ids": [
+      "REF-5590",
+      "REF-5614",
+      "REF-5658",
+      "REF-5663",
+      "REF-5671",
+      "REF-5684",
+      "REF-5697",
+      "REF-5703",
+      "REF-5711",
+      "REF-5725",
+      "REF-6803",
+      "REF-6804",
+      "REF-6805",
+      "REF-6806"
+    ]
+  },
+  "controlled_descriptor_experiment": {
+    "tool": "get_clinic_slots",
+    "versions": {
+      "v1": {
+        "prompt_sha256": "53227aa8bbe16f6d33b2d0b0de1189d12d0673c65feb68a415872545f7806a3f",
+        "descriptor_bundle_sha256": "099508b7e694b84ed7c6b2a37a6f72f954cb9d040be16af0921af5fafab08420",
+        "characters": 5422,
+        "rough_tokens_chars_div_4": 1355
+      },
+      "v2": {
+        "prompt_sha256": "04d0940490d62891c8a8c242344c85dd8dec4a16789fa1e74db336da9c763d6e",
+        "descriptor_bundle_sha256": "ca9278e1ba1144a1a0f01042f9e1af51bc37319dae99786311d65b09bdb08733",
+        "characters": 6076,
+        "rough_tokens_chars_div_4": 1519
+      }
+    },
+    "fixed": [
+      "tool implementation",
+      "routing rules",
+      "other descriptors",
+      "agent loop",
+      "guardrails",
+      "evaluation set",
+      "trial policy",
+      "model",
+      "temperature",
+      "max output tokens",
+      "price inputs"
+    ]
+  },
+  "file_sha256": {
+    "A2_reference_data/make_fixtures_B.py": "d1191b1fa01298aa5bbc7702f5adbb0c8ffbb2647d7fe648fea94d80e5117e68",
+    "A2_reference_data/expected_outcomes_B.json": "075047ccaa91b05a7167a430edb3cdf07e298b4585d1514cf4ec3526b7de3a1a",
+    "A2_reference_data/data_B/as_of.json": "cdb9503adf04c85142481d445ba205f37c48aaf6fbcc8567e2eafc1992580351",
+    "A2_reference_data/data_B/clinic_slots.json": "4eb75229f44a4cc7f4e144c82e216f6b0742872c3809806b38089fce578d1cc9",
+    "A2_reference_data/data_B/contacts.json": "70797732b05f801103ae6750ca4d7af83fc0219522c9657b41ab557d0119a8c6",
+    "A2_reference_data/data_B/patients.json": "0c8a8e4f59b4e9db5e65aa5b4250ebf0177f5917d55fb244e93b6158c082942b",
+    "A2_reference_data/data_B/referrals.json": "e53222a8dbb79dc253bb3ca79c04249382f8627c31a89d7c07a9c40826a82d8e",
+    "A2_reference_data/data_B/specialties.json": "1b186f2ab7249d4f61bc5c897cccf0a2260bf87235c7a69ed0a00374aa22ca04",
+    "A2_reference_data/data_B/urgency_bands.json": "48b1fc7e61022f88293e088e40d7242c7d84b67de635ef27a3be8dd670a81b44",
+    "A2_scaffold/agent.py": "cf8586fc556853c526e2674d61f3593bd3a352fd763a2883e3991aab820c5cee",
+    "A2_scaffold/backends.py": "83e67695dd08580394c6d444bc9193ec0d2d81915ab8357414c87e1c364e897c",
+    "A2_scaffold/config.py": "0cf95c1aaae1fe3edc0a9adcc5af591f4460f9f5cfc3ffd682e2bbdf5a3f69d9",
+    "A2_scaffold/evaluation_scripts.py": "7da234312085f319ecd5b8e0033b4987e022ed76c90f5e89bd43ec672c16aecd",
+    "A2_scaffold/guardrails.py": "93529c6a5d49cdba1c2e5560b05ee0b7bc0f7b148d046fdb92de1b46603c0ed9",
+    "A2_scaffold/harness.py": "938454854e1cc2b0f8dfecccf40e4674e3c3f6f6cdb025bfb35444700de59c36",
+    "A2_scaffold/prompt.py": "39c73911aa3d33d9ef8f6ec7b138ae9138614b324007be8dd9acad5a8ea51ea2",
+    "A2_scaffold/run_eval.py": "924a5dfeabf24e2224a513db84f2e9609a7856c9dd60ed46a7014ab13c5f5a63",
+    "A2_scaffold/tools.py": "46329c6e7540973fd4176709083fc7756506d1b19f5547020732343761984a4f",
+    "artifacts/get_clinic_slots_descriptor_v1.json": "7fe9c9913641d97b8a91c1afe720fae497cb6ecb12a969e663b05c17f4e7e0d6",
+    "artifacts/get_clinic_slots_descriptor_v2.json": "4c56c357dc3c966d3ec5148f298d4e02c8d638f8eba11b0651d8e4aad9045fc7"
+  },
+  "commands": {
+    "validate_data": "python3 A2_reference_data/check_my_data.py",
+    "tests": "python3 -m unittest discover -s tests -v",
+    "scripted": "python3 A2_scaffold/run_eval.py --freeze-sha e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+    "live_v1": "python3 A2_scaffold/run_eval.py --backend live --model openai/gpt-5.4 --descriptor-version v1 --approve-fixture-bookings --price-input-per-million 2.50 --price-output-per-million 15.00 --price-source https://openrouter.ai/openai/gpt-5.4 --price-date 2026-09-15 --freeze-sha e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+    "live_v2": "python3 A2_scaffold/run_eval.py --backend live --model openai/gpt-5.4 --descriptor-version v2 --approve-fixture-bookings --price-input-per-million 2.50 --price-output-per-million 15.00 --price-source https://openrouter.ai/openai/gpt-5.4 --price-date 2026-09-15 --freeze-sha e36bb1b2fcad625ed944e7df863165d95c0ef53f"
+  }
+}

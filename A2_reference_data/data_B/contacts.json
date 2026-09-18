@@ -33,5 +33,80 @@
     "patient_id": "P-1241",
     "method": "sms",
     "value": "+65 8••• ••55"
+  },
+  {
+    "patient_id": "P-2401",
+    "method": "sms",
+    "value": "+65 8xxx 2401"
+  },
+  {
+    "patient_id": "P-2402",
+    "method": "phone",
+    "value": "+65 6xxx 2402"
+  },
+  {
+    "patient_id": "P-2403",
+    "method": "sms",
+    "value": "+65 8xxx 2403"
+  },
+  {
+    "patient_id": "P-2404",
+    "method": "email",
+    "value": "patient2404@example.invalid"
+  },
+  {
+    "patient_id": "P-2405",
+    "method": "phone",
+    "value": "+65 6xxx 2405"
+  },
+  {
+    "patient_id": "P-2406",
+    "method": "sms",
+    "value": "+65 8xxx 2406"
+  },
+  {
+    "patient_id": "P-2407",
+    "method": "phone",
+    "value": "+65 6xxx 2407"
+  },
+  {
+    "patient_id": "P-2408",
+    "method": "email",
+    "value": "patient2408@example.invalid"
+  },
+  {
+    "patient_id": "P-2801",
+    "method": "sms",
+    "value": "+65 9000 2801"
+  },
+  {
+    "patient_id": "P-2802",
+    "method": "sms",
+    "value": "+65 9000 2802"
+  },
+  {
+    "patient_id": "P-2803",
+    "method": "sms",
+    "value": "+65 9000 2803"
+  },
+  {
+    "patient_id": "P-2804",
+    "method": "sms",
+    "value": "+65 9000 2804"
+  },
+  {
+    "patient_id": "P-2805",
+    "method": "sms",
+    "value": "+65 9000 2805"
+  },
+  {
+    "patient_id": "P-2806",
+    "method": "sms",
+    "value": "+65 9000 2806"
+  },
+  {
+    "patient_id": "P-2901",
+    "method": "phone",
+    "value": "+65 6000 2901"
   }
 ]

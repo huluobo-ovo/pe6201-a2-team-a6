@@ -8,8 +8,11 @@ Four things, and NONE of them involve a model. That is the point.
     3. ACTION DE-DUPLICATION   stop repeating an action already taken
     4. AUTONOMY GATE       hold the irreversible step for a human
 
-A model cannot influence whether these fire, which is why D3(b)'s ten
+A model cannot influence whether these fire, which is why D3(b)'s
 guardrail cases run on the SCRIPTED backend. They test your code.
+
+Problem B also checks booking preconditions before the gate and verifies that
+a final `book` matches a successful gated action in the current run.
 
 MAKE THE STOP LOUD. A cap that silently returns an empty answer is
 worse than the loop it prevented: it turns a visible cost problem into
@@ -136,10 +139,50 @@ class Guardrails:
             self._fire("gate_held", "%s (autonomy=suggest)" % action_name)
             return False
         # confirm
-        ok = bool(approve and approve(action_name, payload))
+        ok = approve is not None and approve(action_name, payload) is True
         self._fire("gate_%s" % ("passed" if ok else "held"),
                    "%s (autonomy=confirm)" % action_name)
         return ok
+
+    def check_booking_preconditions(self, case_id, payload, validator):
+        """Stop an invalid proposed booking before requesting approval."""
+        if payload.get("referral_id") != case_id:
+            detail = "booking referral does not match the current case"
+            self._fire("booking_invalid", detail)
+            raise GuardrailStop("booking_invalid", detail)
+        try:
+            validator(**payload)
+        except (TypeError, ValueError) as exc:
+            detail = str(exc)
+            self._fire("booking_invalid", detail)
+            raise GuardrailStop("booking_invalid", detail) from exc
+
+    @staticmethod
+    def booking_confirmed(case_id, booked, tool_trace, events):
+        """Whether the slot was actually booked after a gate passed."""
+        fields = ("clinic", "date", "time")
+        valid = isinstance(booked, dict) and all(booked.get(f) for f in fields)
+        if valid:
+            valid = any(
+                entry.get("tool") == "book_slot"
+                and entry.get("error") is None
+                and isinstance(entry.get("observation"), dict)
+                and entry["observation"].get("booked") is True
+                and entry.get("args", {}).get("referral_id") == case_id
+                and entry["observation"].get("referral_id") == case_id
+                and all(entry["args"].get(f) == booked[f]
+                        and entry["observation"].get(f) == booked[f]
+                        for f in fields)
+                for entry in tool_trace)
+        return valid and any(
+            event.get("guardrail") == "gate_passed" for event in events)
+
+    def check_booking_record(self, case_id, booked, tool_trace):
+        """A final `book` must match a successful, gated booking in this run."""
+        if not self.booking_confirmed(case_id, booked, tool_trace, self.fired):
+            detail = "final book has no matching approved book_slot result"
+            self._fire("booking_unverified", detail)
+            raise GuardrailStop("booking_unverified", detail)
 
     # ---- bookkeeping ------------------------------------------------
     def _fire(self, kind, detail):

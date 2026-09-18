@@ -50,23 +50,20 @@ def _looping_script(CASE):
 
 
 def _tool_interface_failure_script():
-    """The same case with the slot-tool's band constraint removed.
+    """An erroneous model move: propose an urgent slot for a routine case.
 
-    The working tool requires the model to pass the band returned by
-    ``check_referral_criteria``.  This bad script represents a model using
-    the weakened interface: it omits ``band`` and then books the first slot
-    returned by that permissive tool.  The referral is routine, but the
-    first urgent slot is booked.
+    The script stays identical before and after removing the booking
+    validator, so the change in outcome is attributable to that deletion.
     """
     return [
         copy.deepcopy(backends.SCRIPTS["REF-5602"][0]),
         copy.deepcopy(backends.SCRIPTS["REF-5602"][1]),
-        {"thought": "Search the whole window; the weakened slot interface "
-                    "does not require the urgency band.",
+        {"thought": "Search routine slots in the legal window.",
          "calls": [("get_clinic_slots", {
-             "specialty": "OPH", "from": "2026-09-09", "to": "2026-11-04"
+             "specialty": "OPH", "band": "routine",
+             "from": "2026-09-09", "to": "2026-11-04"
          })]},
-        {"thought": "Book the first available slot returned.",
+        {"thought": "Erroneously book a different, urgent slot.",
          "calls": [("book_slot", {
              "clinic": "OPH-C1", "date": "2026-09-15", "time": "09:40",
              "referral_id": "REF-5602"
@@ -75,8 +72,7 @@ def _tool_interface_failure_script():
             "decision": "book",
             "booked": {"clinic": "OPH-C1", "date": "2026-09-15",
                        "time": "09:40"},
-            "reason": "Booked the first returned slot without preserving "
-                      "the routine band.",
+            "reason": "Booked an urgent slot despite routine criteria.",
         }, "thought": "Finish."},
     ]
 
@@ -169,38 +165,39 @@ def main(case=None, problem=None):
 
 
 def run_tool_interface_failure():
-    """Reproduce a distinct D7 failure by deleting a tool constraint."""
+    """Reproduce a distinct D7 failure by deleting booking validation."""
     case = CASES["B"]
     original_script = backends.SCRIPTS[case]
-    original_tool = tools.REGISTRY["B"]["get_clinic_slots"]
+    real_validator = tools.validate_booking_slot
 
-    # BEFORE: the shipped interface requires `band`, so the working script
-    # filters out urgent/soon slots and books routine OPH-C2 on 10-14.
-    before = run_case(case, problem="B")
+    # The model proposes a wrong-band slot in both runs. The working tool
+    # interface rejects it; deleting only its validation admits the error.
+    backends.SCRIPTS[case] = _tool_interface_failure_script()
+    try:
+        before = run_case(case, problem="B")
+        tools.validate_booking_slot = lambda *args, **kwargs: None
+        try:
+            after = run_case(case, problem="B")
+        finally:
+            tools.validate_booking_slot = real_validator
+    finally:
+        backends.SCRIPTS[case] = original_script
+
+    if before["stopped_by"] != "booking_invalid" \
+            or after["decision"] != "book" \
+            or after.get("booked", {}).get("clinic") != "OPH-C1":
+        raise AssertionError("booking-validator failure did not reproduce")
+
     print()
     print("=" * 68)
-    print("  SECOND FAILURE · TOOL INTERFACE (missing required band)")
-    print("BEFORE - required band constraint in get_clinic_slots")
+    print("  SECOND FAILURE · TOOL INTERFACE (booking validator removed)")
+    print("BEFORE - wrong-band booking stopped by tool preconditions")
     print("  turns %d · tool calls %d · tokens %d · cost US$%.5f · decision %s · stopped_by %s"
           % (before["turns"], len(before["evidence"]),
              before["tokens_in"] + before["tokens_out"], before["cost_usd"],
              before["decision"], before["stopped_by"]))
     print("  booked: %s" % before.get("booked"))
-
-    def permissive_slots(specialty, **window):
-        # This is the interface deletion: band is no longer required.  The
-        # unsafe default is intentionally visible in the reproduction.
-        return original_tool(specialty, band="urgent", **window)
-
-    backends.SCRIPTS[case] = _tool_interface_failure_script()
-    tools.REGISTRY["B"]["get_clinic_slots"] = permissive_slots
-    try:
-        after = run_case(case, problem="B")
-    finally:
-        tools.REGISTRY["B"]["get_clinic_slots"] = original_tool
-        backends.SCRIPTS[case] = original_script
-
-    print("AFTER - same agent MINUS the required band interface constraint")
+    print("AFTER - same script MINUS the booking validator")
     print("  turns %d · tool calls %d · tokens %d · cost US$%.5f · decision %s · stopped_by %s"
           % (after["turns"], len(after["evidence"]),
              after["tokens_in"] + after["tokens_out"], after["cost_usd"],
@@ -208,12 +205,10 @@ def run_tool_interface_failure():
     print("  booked: %s" % after.get("booked"))
     print("  tool calls: %s" % after["evidence"])
     print()
-    print("  INSTRUMENTATION: both runs terminate normally; the failure is")
-    print("  semantic, not a crash. The criteria result says band=routine,")
-    print("  but AFTER books urgent OPH-C1 on 2026-09-15.")
-    print("  CORRECT FIX: tool-interface layer - require band and validate")
-    print("  it against the allowed values, so omission cannot silently widen")
-    print("  or change the urgency filter.")
+    print("  INSTRUMENTATION: BEFORE stops at booking_invalid; AFTER books")
+    print("  urgent OPH-C1 although the criteria and slot query say routine.")
+    print("  CORRECT FIX: keep the tool-interface booking preconditions and")
+    print("  check the proposed slot against specialty, band and window.")
     print("  NOT loop control: the bad run is 4 turns, below the cap of %d,"
           % config.MAX_TURNS)
     print("  and it makes no duplicate calls. A cap or de-duplication guard")

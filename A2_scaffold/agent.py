@@ -54,8 +54,8 @@ def run_case(case_id, problem=None, approve=None, verbose=False,
     # The trailing optional parameter keeps existing run_case calls valid.
     backend = make_backend(
         case_id,
-        tool_descriptors=[tools.DESCRIPTORS[n] for n in tools.REGISTRY[problem]
-                          if n in tools.DESCRIPTORS],
+        tool_descriptors=prompt.descriptors_for(
+            problem, config.DESCRIPTOR_VERSION),
         system_prompt=prompt.build_system_prompt(problem),
         execution_mode=execution_mode)
 
@@ -76,10 +76,9 @@ def run_case(case_id, problem=None, approve=None, verbose=False,
     stopped_by = None
     backend_error = None
 
-    # On the scripted backend the gate auto-approves so the run stays
-    # deterministic. The RECORD still shows the gate was reached and
-    # passed, which is what a marker looks for.
-    if approve is None:
+    # Only the scripted backend auto-approves, keeping offline evaluation
+    # deterministic. A live run in confirm mode needs an explicit callback.
+    if approve is None and backend.name == "scripted":
         approve = lambda action, payload: True
 
     try:
@@ -120,6 +119,9 @@ def run_case(case_id, problem=None, approve=None, verbose=False,
             # ---- conclude -------------------------------------------
             if "final" in move:
                 record = dict(move["final"])
+                if problem == "B" and record.get("decision") == "book":
+                    guards.check_booking_record(
+                        case_id, record.get("booked"), tool_trace)
                 break
 
             # ---- act: one turn may carry SEVERAL calls ---------------
@@ -137,6 +139,9 @@ def run_case(case_id, problem=None, approve=None, verbose=False,
 
                 # THE GATE goes in front of the irreversible step only.
                 if name == tools.GATED_ACTION.get(problem):
+                    if problem == "B":
+                        guards.check_booking_preconditions(
+                            case_id, args, tools.validate_booking_slot)
                     if not guards.gate(name, args, approve):
                         raise GuardrailStop(
                             "gate_held",
@@ -229,8 +234,18 @@ def run_case(case_id, problem=None, approve=None, verbose=False,
         "stopped_by": stopped_by,
         "backend_error": backend_error,
         "backend": backend.name,
+        # The requested route is always available for a live run.  New runs
+        # also retain the model id returned by every provider response, when
+        # present.  Historical frozen artifacts remain immutable and may not
+        # contain the response-side field.
+        "requested_model_id": getattr(backend, "requested_model_id", None),
+        "model_identity_trace": getattr(backend, "model_identity_trace", []),
         # Preserve each live response's API-reported token counts for audit.
         "model_usage": getattr(backend, "usage_trace", []),
+        "model_response_trace": getattr(backend, "response_trace", []),
+        "provider_reported_cost_usd": round(sum(
+            entry.get("provider_cost_usd", 0.0)
+            for entry in getattr(backend, "usage_trace", [])), 8),
         # Make the token source explicit so estimates are never reported as
         # measurements in the evaluation or cost analysis.
         "token_measurement": (

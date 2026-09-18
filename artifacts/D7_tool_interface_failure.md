@@ -1,16 +1,16 @@
-# D7 second failure: missing urgency-band constraint
+# D7 second failure: booking tool without precondition validation
 
-This is a separate failure from the existing loop-control example in
-`A2_scaffold/demo_loop_failure.py`. It is built as “the working agent, minus
-one tool-interface constraint”: `get_clinic_slots` no longer requires the
-`band` argument, and the weakened interface silently defaults the query to
-`urgent`.
+This is separate from the action-loop failure in
+`A2_scaffold/demo_loop_failure.py`. The controlled deletion removes one
+tool-interface check: `validate_booking_slot`. The agent script, referral,
+slot data, autonomy mode, and other guards stay the same across runs.
 
-The scripted case is `REF-5602`. `check_referral_criteria` reports
-`band=routine`. The working interface therefore filters for routine slots and
-books `OPH-C2 / 2026-10-14 11:20`. With the constraint removed, the scripted
-agent omits `band`; the permissive tool returns the first urgent slot and the
-agent books `OPH-C1 / 2026-09-15 09:40`.
+The scripted case is `REF-5602`. Its criteria say `band=routine`, and the
+slot query returns routine slots. The deliberately erroneous model move then
+proposes `OPH-C1 / 2026-09-15 09:40`, which belongs to the **urgent** band.
+With the validator present, the agent stops before seeking approval or
+calling `book_slot`. With the validator removed, the same proposal is accepted
+and the agent records a wrong-band booking.
 
 ## Reproduction
 
@@ -20,25 +20,28 @@ From `A2_scaffold/`, run:
 python3 demo_loop_failure.py
 ```
 
-No API key or network call is needed; `config.BACKEND` remains `scripted`.
+No API key or network call is needed; the backend remains `scripted`. The
+demonstration restores `validate_booking_slot` in a `finally` block.
 
 | run | turns | tool calls | tokens | cost | decision | stopped_by |
 | --- | ---: | ---: | ---: | ---: | --- | --- |
-| before: required `band` | 4 | 6 | 21,600 | US$0.00234 | `book` | `None` |
-| after: band constraint removed | 4 | 5 | 21,600 | US$0.00234 | `book` | `None` |
+| before: validator present | 4 | 4 | 14,880 | US$0.00163 | `escalate` | `booking_invalid` |
+| after: validator removed | 4 | 5 | 21,600 | US$0.00234 | `book` | `None` |
 
-The error is semantic, not a crash: the after-run completes normally and
-returns `book`, but books an urgent slot for a routine referral.
+The absent validator creates a semantic failure rather than a crash. The
+booking would violate the referral's routine band, although the agent's
+final decision says `book`. The error is visible by comparing the criteria,
+queried slots, booking observation, and `stopped_by` field.
 
 ## Diagnosis
 
-The correct fix belongs in the tool-interface layer: keep `band` required and
-validate it against `urgent|soon|routine` (and, ideally, validate that the
-chosen slot's band matches the requested band). This makes omission fail
-loudly instead of silently changing the business meaning of the query.
+The fix belongs at the booking tool boundary: compare the proposed slot with
+the referral's specialty, mandatory tests, duplicate history, urgency band,
+window from `as_of`, and current slot capacity before executing the action.
+The agent checks these preconditions before the approval gate, and
+`book_slot` repeats the check so direct tool calls cannot bypass it.
 
-Neither loop control nor action de-duplication is the right fix. The bad run
-uses 4 turns, below the cap of 8, and makes no duplicate call. A step cap could
-only truncate the run, while de-duplication could only detect repeats; neither
-would prevent an otherwise unique urgent slot from being booked for a routine
+The step cap and action de-duplication are not suitable substitutes. The bad
+run uses four turns, below the eight-turn cap, and makes no repeated call.
+Neither control can determine that an urgent slot was booked for a routine
 referral.

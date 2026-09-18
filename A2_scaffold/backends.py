@@ -154,6 +154,16 @@ SCRIPTS = {
     ],
 }
 
+# D5(a) must cover the whole submitted evaluation set, not only the one
+# worked example above.  The scenario builder derives deterministic replays
+# from fixture records and the fixed routing order without reading the answer
+# key.  Keep the explicit worked examples when ids overlap because their exact
+# grouped-call traces are also D2(c) evidence.
+from evaluation_scripts import build_problem_b_scripts
+
+for _case_id, _steps in build_problem_b_scripts().items():
+    SCRIPTS.setdefault(_case_id, _steps)
+
 
 def build_script_steps(case_id, execution_mode="grouped"):
     """Build an independent action sequence for one scripted run."""
@@ -261,12 +271,20 @@ class LiveBackend:
         self.case_id = case_id
         self.tools = tool_descriptors
         self.system_prompt = system_prompt
+        # Preserve both sides of model identity.  ``requested_model_id`` is
+        # the exact OpenRouter route configured for the run; the response
+        # trace records the provider-returned model id when the endpoint
+        # supplies one.  Keeping both avoids silently treating a requested
+        # alias as proof of the provider-resolved model.
+        self.requested_model_id = config.MODEL
+        self.model_identity_trace = []
         # Step 1: Keep the latest API-reported usage for the agent loop.
         self.last_usage = {"prompt_tokens": 0, "completion_tokens": 0,
                            "total_tokens": 0}
         self.usage_available = False
         # Step 2: Preserve per-response usage for later cost auditing.
         self.usage_trace = []
+        self.response_trace = []
 
     def next_move(self, transcript):
         # A failed request must not reuse usage from the preceding response.
@@ -286,6 +304,13 @@ class LiveBackend:
         # Step 4: Require measured usage instead of silently recording zeros.
         if not isinstance(payload, dict):
             raise LiveResponseError("live API response was not a JSON object")
+        returned_model_id = payload.get("model")
+        if not isinstance(returned_model_id, str) or not returned_model_id.strip():
+            returned_model_id = None
+        self.model_identity_trace.append({
+            "requested_model_id": self.requested_model_id,
+            "provider_returned_model_id": returned_model_id,
+        })
         usage = payload.get("usage") or {}
         if "prompt_tokens" not in usage or "completion_tokens" not in usage:
             raise LiveResponseError("live API response did not include token usage")
@@ -304,7 +329,12 @@ class LiveBackend:
             "total_tokens": total_tokens,
         }
         self.usage_available = True
-        self.usage_trace.append(dict(self.last_usage))
+        usage_entry = dict(self.last_usage)
+        if isinstance(usage.get("cost"), (int, float)):
+            usage_entry["provider_cost_usd"] = float(usage["cost"])
+        if isinstance(usage.get("cost_details"), dict):
+            usage_entry["provider_cost_details"] = usage["cost_details"]
+        self.usage_trace.append(usage_entry)
 
         # Step 5: Parse only the assistant content after usage is recorded.
         try:
@@ -315,6 +345,7 @@ class LiveBackend:
             ) from exc
         if not isinstance(raw, str) or not raw.strip():
             raise LiveResponseError("live API returned empty assistant content")
+        self.response_trace.append(raw)
         return _parse_move(raw)
 
     def token_estimate(self, transcript):
@@ -374,6 +405,7 @@ def _live_call(messages):
         "model": config.MODEL,
         "messages": messages,
         "temperature": 0,
+        "max_tokens": config.MAX_OUTPUT_TOKENS,
     }).encode()
     req = urllib.request.Request(
         config.BASE_URL.rstrip("/") + "/chat/completions",
