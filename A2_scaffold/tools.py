@@ -51,6 +51,7 @@ against no policy at all.
 """
 import json
 import os
+from datetime import date as calendar_date, timedelta
 
 import config
 
@@ -255,12 +256,52 @@ def get_clinic_slots(specialty, band, **window):
             and s["capacity_remaining"] > 0]
 
 
+def validate_booking_slot(clinic, date, time, referral_id):
+    """Reject a booking that contradicts the current Problem B records.
+
+    This is an internal precondition check, not an agent-facing tool.  It uses
+    the existing referral protocol and slot interface without changing either.
+    """
+    referral = get_referral(referral_id)
+    if referral is None:
+        raise ValueError("unknown referral %r" % referral_id)
+
+    specialty = referral["specialty"]
+    criteria = check_referral_criteria(specialty, referral_id)
+    if criteria is None:
+        raise ValueError("unknown specialty %r" % specialty)
+    if criteria["red_flag_term"]:
+        raise ValueError("red flag requires escalation before booking")
+    if not criteria["right_department"]:
+        raise ValueError("specialty mismatch requires escalation before booking")
+    if criteria["missing_tests"]:
+        raise ValueError("mandatory tests are missing before booking")
+
+    patient = lookup_patient(referral["patient_id"])
+    if patient is None:
+        raise ValueError("unknown patient %r" % referral["patient_id"])
+    start = as_of()
+    if any(appointment["specialty"] == specialty
+           and appointment["date"] > start
+           for appointment in patient["patient"]["existing_appointments"]):
+        raise ValueError("future same-specialty appointment already exists")
+
+    end = (calendar_date.fromisoformat(start)
+           + timedelta(weeks=criteria["window_weeks"])).isoformat()
+    slots = get_clinic_slots(specialty, criteria["band"],
+                             **{"from": start, "to": end})
+    if not any(slot["clinic"] == clinic and slot["date"] == date
+               and slot["time"] == time for slot in slots):
+        raise ValueError("slot is not available in the required band and window")
+
+
 def book_slot(clinic, date, time, referral_id):
     """>>> THE IRREVERSIBLE STEP FOR PROBLEM B <<<
 
     WHAT IT DOES   commits the appointment. A patient is now expected at
                    a clinic on a date.
-    READS          nothing - it WRITES, conceptually
+    READS          referral, protocol, patient and slot records to validate
+                   the booking; it WRITES, conceptually
     RETURNS        a confirmation carrying everything the record needs
     WATCH OUT      this is the ONE call in Problem B that cannot be taken
                    back. Every other tool can be re-run harmlessly.
@@ -277,6 +318,7 @@ def book_slot(clinic, date, time, referral_id):
     genuinely changes the world is much harder to test, and that is a
     real cost of autonomy, not a detail of this exercise.
     """
+    validate_booking_slot(clinic, date, time, referral_id)
     return {"booked": True, "clinic": clinic, "date": date,
             "time": time, "referral_id": referral_id}
 
@@ -625,10 +667,11 @@ DESCRIPTORS = {
                  "time": "str, from the chosen slot",
                  "referral_id": "str, the case id"},
         "returns": "{booked: true, clinic, date, time, referral_id}",
-        "failure": "This call is GATED: it may be held for human approval "
-                   "depending on the autonomy setting. If it is held, that is "
-                   "the correct outcome and not an error - report that the "
-                   "booking awaits approval, and name the slot you would take.",
+        "failure": "Invalid referral or slot preconditions stop before "
+                   "approval: red flag, wrong specialty, missing test, "
+                   "future duplicate, wrong band, out-of-window or full slot. "
+                   "A valid booking can still be held at the autonomy gate "
+                   "until a human explicitly approves it.",
     },
     "as_of": {
         "name": "as_of",

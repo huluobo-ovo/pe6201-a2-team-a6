@@ -31,9 +31,12 @@ grading a model is a claim that needs defending.
 import json
 import os
 import statistics
+from collections import defaultdict
 
 import config
+import tools
 from agent import run_case
+from guardrails import Guardrails
 
 
 # =====================================================================
@@ -71,10 +74,10 @@ def load_cases(problem=None):
 def code_check(record, expected):
     """Deterministic comparison. Returns (passed, [reasons it failed]).
 
-    Note what is compared and what is NOT. The DECISION and its single
-    TRIGGER are compared. The wording is not, the turn count is not, the
-    cost is not - two agents can both be right and cost very different
-    amounts, which is the subject of D6.
+    The decision, single trigger and exact booked slot are compared. A
+    booking also needs a matching successful gated action in the tool trace;
+    a model's final JSON alone is not proof of execution. The wording, turn
+    count and cost are not compared.
     """
     fails = []
 
@@ -90,6 +93,14 @@ def code_check(record, expected):
             fails.append("trigger %r, expected %r"
                          % (record.get("trigger"), expected["trigger"]))
 
+    # Requests must name the missing item exactly.  A vague request can have
+    # the right decision while still failing the department protocol.
+    if expected.get("missing") is not None:
+        if _normalise_missing(record.get("missing")) != \
+                _normalise_missing(expected["missing"]):
+            fails.append("missing %r, expected %r"
+                         % (record.get("missing"), expected["missing"]))
+
     # A booking must book the RIGHT slot. Problem B only.
     if expected.get("booked"):
         got = record.get("booked") or {}
@@ -97,8 +108,44 @@ def code_check(record, expected):
             if got.get(field) != expected["booked"][field]:
                 fails.append("booked.%s %r, expected %r"
                              % (field, got.get(field), expected["booked"][field]))
+        if not Guardrails.booking_confirmed(
+                record.get("case_id"), got, record.get("tool_trace") or [],
+                record.get("guardrails_fired") or []):
+            fails.append("no matching approved book_slot result in tool trace")
+
+    # The gated action is part of correctness, not only a guardrail detail.
+    # A booking must reach it exactly once and pass its gate; every negative
+    # outcome must avoid it entirely.
+    record_problem = ("B" if str(record.get("case_id", "")).startswith("REF-")
+                      else "A")
+    gated_action = tools.GATED_ACTION.get(record_problem)
+    gated_calls = [entry for entry in record.get("tool_trace", [])
+                   if entry.get("tool") == gated_action
+                   and entry.get("error") is None]
+    gate_passes = [event for event in record.get("guardrails_fired", [])
+                   if event.get("guardrail") == "gate_passed"]
+    expected_calls = (1 if record_problem == "A" else
+                      1 if expected.get("expected_decision") == "book" else 0)
+    if len(gated_calls) != expected_calls:
+        fails.append("gated action %s executed %d time(s), expected %d"
+                     % (gated_action, len(gated_calls), expected_calls))
+    if expected_calls and len(gate_passes) != 1:
+        fails.append("irreversible-action gate passed %d time(s), expected 1"
+                     % len(gate_passes))
 
     return (not fails), fails
+
+
+def _normalise_missing(value):
+    """Make supported missing-item shapes comparable without fuzzy matching."""
+    if isinstance(value, dict):
+        parts = [value.get("name") or value.get("item"), value.get("code")]
+        value = " ".join(str(part) for part in parts if part)
+    elif isinstance(value, list):
+        value = "; ".join(str(item) for item in value)
+    if value is None:
+        return None
+    return " ".join(str(value).strip().lower().split())
 
 
 # =====================================================================
@@ -116,6 +163,7 @@ def prepare_judgement_check(record, expected):
         "decision": record.get("decision"),
         "reason": record.get("reason", ""),
         "must_record": expected.get("must_record", []),
+        "check_type": "code_and_judgement",
         "verdict": None,          # <- a person or a second model fills this
         "graded_by": None,        # <- "person: Priya" | "model: <name>"
     }
@@ -124,7 +172,8 @@ def prepare_judgement_check(record, expected):
 # =====================================================================
 # RUNNING THE SET
 # =====================================================================
-def run_set(case_ids=None, problem=None, trials_for=None, verbose=False):
+def run_set(case_ids=None, problem=None, trials_for=None, verbose=False,
+            approve=None):
     """Run cases and grade them.
 
     `trials_for(case_id) -> int` decides how many trials each case gets.
@@ -148,12 +197,19 @@ def run_set(case_ids=None, problem=None, trials_for=None, verbose=False):
             continue
 
         for trial in range(1, trials_for(cid) + 1):
-            record = run_case(cid, problem=problem, verbose=verbose)
+            record = run_case(cid, problem=problem, verbose=verbose,
+                              approve=approve)
             passed, fails = code_check(record, expected)
+            check_type = expected.get("check_type", "code")
+            if check_type not in ("code", "code_and_judgement"):
+                raise ValueError("%s has unsupported check_type %r"
+                                 % (cid, check_type))
             results.append({"case_id": cid, "trial": trial, "passed": passed,
                             "fails": fails, "record": record,
-                            "family": expected.get("family")})
-            if trial == 1:
+                            "family": expected.get("family"),
+                            "negative": _is_negative(expected),
+                            "check_type": check_type})
+            if trial == 1 and check_type == "code_and_judgement":
                 judgement_queue.append(prepare_judgement_check(record, expected))
 
     return results, judgement_queue
@@ -176,21 +232,49 @@ def report(results):
     because a pass rate without one is not a measurement."""
     total = len(results)
     passed = sum(1 for r in results if r["passed"])
-    turns = [r["record"]["turns"] for r in results]
-    cost = sum(r["record"]["cost_usd"] for r in results)
+    turns = [r["record"].get("turns", 0) for r in results]
+    cost = sum(r["record"].get("cost_usd", 0.0) for r in results)
+    provider_cost = sum(
+        r["record"].get("provider_reported_cost_usd", 0.0)
+        for r in results)
+    negative = [r for r in results if r.get("negative")]
+    negative_passed = sum(1 for r in negative if r["passed"])
+    tokens_in = sum(r["record"].get("tokens_in", 0) for r in results)
+    tokens_out = sum(r["record"].get("tokens_out", 0) for r in results)
+    error_trials = sum(1 for r in results
+                       if r["record"].get("backend_error")
+                       or r["record"].get("stopped_by") in
+                       ("backend_error", "api_error", "response_error",
+                        "tool_error"))
+    cases = {r["case_id"] for r in results}
+    negative_cases = {r["case_id"] for r in negative}
+    judgement_cases = {r["case_id"] for r in results
+                       if r.get("check_type") == "code_and_judgement"}
 
     print()
     print("=" * 68)
-    print("  RESULTS   %d of %d trials passed   (%.0f%%)"
+    print("  CODE CHECK   %d of %d trials passed   (%.1f%%)"
           % (passed, total, 100.0 * passed / total if total else 0))
     print("=" * 68)
+    print("  cases               %d (%d negative)"
+          % (len(cases), len(negative_cases)))
     print("  trials              %d" % total)
+    print("  negative trials     %d of %d passed (%.1f%%)"
+          % (negative_passed, len(negative),
+             100.0 * negative_passed / len(negative) if negative else 0))
+    print("  judgement queue     %d case(s) pending human/model review"
+          % len(judgement_cases))
     print("  median turns        %s" % (statistics.median(turns) if turns else "-"))
     print("  worst case turns    %s" % (max(turns) if turns else "-"))
     print("  hit the step cap    %d"
-          % sum(1 for r in results if r["record"]["stopped_by"] == "step_cap"))
+          % sum(1 for r in results
+                if r["record"].get("stopped_by") == "step_cap"))
+    print("  tokens in / out     %d / %d" % (tokens_in, tokens_out))
+    print("  error trials        %d" % error_trials)
     print("  total cost          US$%.4f   (%s backend)"
           % (cost, results[0]["record"]["backend"] if results else "-"))
+    if provider_cost:
+        print("  provider cost       US$%.4f   (API-reported)" % provider_cost)
     print()
 
     failures = [r for r in results if not r["passed"]]
@@ -208,10 +292,65 @@ def report(results):
         print("  table? If yes, the agent is wrong. If no, the label is.")
     else:
         print("  Every trial passed the code check.")
-        print("  That is HALF the check. Work through the judgement queue")
-        print("  before you believe this number.")
+        if judgement_cases:
+            print("  Complete the judgement queue before reporting a combined")
+            print("  pass rate for the %d selected prose-evidence cases."
+                  % len(judgement_cases))
     print()
-    return {"trials": total, "passed": passed,
+    return {"cases": len(cases), "negative_cases": len(negative_cases),
+            "trials": total, "passed": passed,
             "pass_rate": passed / total if total else 0.0,
+            "code_pass_rate": passed / total if total else 0.0,
+            "negative_trials": len(negative),
+            "negative_passed": negative_passed,
+            "negative_code_pass_rate": (
+                negative_passed / len(negative) if negative else 0.0),
+            "judgement_cases": len(judgement_cases),
+            "judgement_pending": len(judgement_cases),
             "median_turns": statistics.median(turns) if turns else None,
-            "cost_usd": cost}
+            "worst_case_turns": max(turns) if turns else None,
+            "step_cap_hits": sum(
+                1 for r in results
+                if r["record"].get("stopped_by") == "step_cap"),
+            "tokens_in": tokens_in, "tokens_out": tokens_out,
+            "error_trials": error_trials, "cost_usd": cost,
+            "provider_reported_cost_usd": provider_cost}
+
+
+def summarise_cases(results):
+    """Return the compact per-case result table required by D4."""
+    grouped = defaultdict(list)
+    for result in results:
+        grouped[result["case_id"]].append(result)
+
+    rows = []
+    for case_id, trials in grouped.items():
+        records = [trial["record"] for trial in trials]
+        passed = sum(1 for trial in trials if trial["passed"])
+        rows.append({
+            "case_id": case_id,
+            "family": trials[0].get("family"),
+            "negative": trials[0].get("negative", False),
+            "check_type": trials[0].get("check_type", "code"),
+            "trials": len(trials),
+            "code_passed": passed,
+            "code_pass_rate": passed / len(trials),
+            "decisions": [record.get("decision") for record in records],
+            "median_turns": statistics.median(
+                record.get("turns", 0) for record in records),
+            "tokens_in": sum(record.get("tokens_in", 0)
+                             for record in records),
+            "tokens_out": sum(record.get("tokens_out", 0)
+                              for record in records),
+            "cost_usd": round(sum(record.get("cost_usd", 0.0)
+                                  for record in records), 6),
+            "provider_reported_cost_usd": round(sum(
+                record.get("provider_reported_cost_usd", 0.0)
+                for record in records), 8),
+            "errors": sum(1 for record in records
+                          if record.get("backend_error")
+                          or record.get("stopped_by") in
+                          ("backend_error", "api_error", "response_error",
+                           "tool_error")),
+        })
+    return rows

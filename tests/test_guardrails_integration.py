@@ -10,6 +10,7 @@ import os
 import sys
 import unittest
 from contextlib import contextmanager
+from unittest.mock import patch
 
 
 SCAFFOLD = os.path.abspath(os.path.join(os.path.dirname(__file__), "..",
@@ -20,6 +21,7 @@ if SCAFFOLD not in sys.path:
 import agent
 import backends
 import config
+import harness
 import tools
 
 
@@ -125,6 +127,114 @@ class GuardrailsIntegrationTests(unittest.TestCase):
                          [entry["tool"] for entry in record["tool_trace"]])
         self.assertEqual(record["guardrails_fired"][-1]["guardrail"],
                          "gate_held")
+
+    def test_live_confirm_needs_explicit_approval(self):
+        class OfflineLiveBackend(backends.ScriptedBackend):
+            name = "live"
+
+        with isolated_runtime(BACKEND="live", PROBLEM="B", AUTONOMY="confirm"):
+            with patch.object(agent, "make_backend",
+                              side_effect=lambda case_id, **_: OfflineLiveBackend(case_id)):
+                record = agent.run_case("REF-5602", problem="B")
+
+        self.assertEqual(record["stopped_by"], "gate_held")
+        self.assertNotIn("book_slot", record["evidence"])
+        self.assertEqual(record["guardrails_fired"][-1]["guardrail"],
+                         "gate_held")
+
+    def test_scripted_booking_still_passes_confirm_gate(self):
+        with isolated_runtime(BACKEND="scripted", PROBLEM="B",
+                              AUTONOMY="confirm"):
+            record = agent.run_case("REF-5602", problem="B")
+
+        self.assertEqual(record["decision"], "book")
+        self.assertIsNone(record["stopped_by"])
+        self.assertIn("book_slot", record["evidence"])
+        self.assertIn("gate_passed", [event["guardrail"]
+                                      for event in record["guardrails_fired"]])
+
+    def test_invalid_slot_is_stopped_before_approval(self):
+        args = {"clinic": "NONEXISTENT", "date": "2026-01-01",
+                "time": "00:00", "referral_id": "REF-5602"}
+        scripts = {"TEST-INVALID-BOOKING": action_script(("book_slot", args))}
+        with isolated_runtime(scripts, BACKEND="scripted", PROBLEM="B",
+                              AUTONOMY="confirm"):
+            record = agent.run_case("TEST-INVALID-BOOKING", problem="B")
+
+        self.assertEqual(record["stopped_by"], "booking_invalid")
+        self.assertEqual(record["evidence"], [])
+        self.assertEqual(record["tool_trace"], [])
+        self.assertEqual(record["guardrails_fired"][-1]["guardrail"],
+                         "booking_invalid")
+
+    def test_booking_another_referral_is_stopped_before_approval(self):
+        args = {"clinic": "OPH-C2", "date": "2026-10-14",
+                "time": "11:20", "referral_id": "REF-5602"}
+        scripts = {"TEST-WRONG-CASE": action_script(("book_slot", args))}
+        with isolated_runtime(scripts, BACKEND="scripted", PROBLEM="B",
+                              AUTONOMY="confirm"):
+            record = agent.run_case("TEST-WRONG-CASE", problem="B")
+
+        self.assertEqual(record["stopped_by"], "booking_invalid")
+        self.assertEqual(record["evidence"], [])
+        self.assertEqual(record["tool_trace"], [])
+
+    def test_tool_rejects_invalid_booking_when_called_directly(self):
+        with self.assertRaisesRegex(ValueError, "slot is not available"):
+            tools.book_slot("NONEXISTENT", "2026-01-01", "00:00", "REF-5602")
+
+    def test_booking_preconditions_follow_referral_protocol(self):
+        attempts = [
+            ("red flag", "REF-5590", "OPH-C2", "2026-10-14", "11:20"),
+            ("mandatory tests", "REF-5614", "OPH-C2", "2026-10-14", "11:20"),
+            ("specialty mismatch", "REF-5671", "OPH-C2", "2026-10-14", "11:20"),
+            ("future same-specialty", "REF-5684", "OPH-C2", "2026-10-14", "11:20"),
+            ("required band and window", "REF-5602", "OPH-C1", "2026-09-15", "09:40"),
+            ("required band and window", "REF-5602", "OPH-C2", "2026-11-10", "09:40"),
+            ("required band and window", "REF-5602", "OPH-C2", "2026-09-23", "11:20"),
+        ]
+        for reason, referral_id, clinic, date, time in attempts:
+            with self.subTest(referral_id=referral_id, clinic=clinic, date=date):
+                with self.assertRaisesRegex(ValueError, reason):
+                    tools.validate_booking_slot(clinic, date, time, referral_id)
+
+    def test_final_book_without_action_is_rejected(self):
+        scripts = {"TEST-FINAL-ONLY": [{"final": {
+            "decision": "book",
+            "booked": {"clinic": "OPH-C2", "date": "2026-10-14",
+                       "time": "11:20"},
+        }}]}
+        with isolated_runtime(scripts, BACKEND="scripted", PROBLEM="B"):
+            record = agent.run_case("TEST-FINAL-ONLY", problem="B")
+
+        self.assertEqual(record["stopped_by"], "booking_unverified")
+        self.assertEqual(record["decision"], "escalate")
+        self.assertEqual(record["tool_trace"], [])
+
+    def test_code_check_requires_a_real_booking_trace(self):
+        expected = harness.load_key("B")["REF-5602"]
+        forged = {"case_id": "REF-5602", "decision": "book",
+                  "booked": expected["booked"], "tool_trace": [],
+                  "guardrails_fired": []}
+        passed, fails = harness.code_check(forged, expected)
+        self.assertFalse(passed)
+        self.assertIn("no matching approved book_slot result in tool trace",
+                      fails)
+
+        real = agent.run_case("REF-5602", problem="B")
+        passed, fails = harness.code_check(real, expected)
+        self.assertTrue(passed, fails)
+
+    def test_final_book_must_match_actual_booking(self):
+        script = copy.deepcopy(backends.SCRIPTS["REF-5602"])
+        script[-1]["final"]["booked"]["time"] = "14:00"
+        with isolated_runtime({"REF-5602": script}, BACKEND="scripted",
+                              PROBLEM="B", AUTONOMY="confirm"):
+            record = agent.run_case("REF-5602", problem="B")
+
+        self.assertEqual(record["stopped_by"], "booking_unverified")
+        self.assertEqual(record["decision"], "escalate")
+        self.assertIn("book_slot", record["evidence"])
 
 
 if __name__ == "__main__":

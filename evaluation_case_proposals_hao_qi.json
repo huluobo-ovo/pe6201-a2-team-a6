@@ -1,0 +1,413 @@
+{
+  "owner": "Hao Qi (郝琪)",
+  "team_role": "Guardrails and Failure Reproduction; evaluation case contributor",
+  "problem": "B",
+  "status": "proposal_pending_evaluation_owner_review",
+  "coordination_note": "Reserve REF-6301 to REF-6308 before merging. These cases add only new referral, patient, contact, and clinic-slot rows; shipped rows and URGENCY_BANDS/AS_OF are unchanged.",
+  "case_mix": {
+    "total": 8,
+    "book": 4,
+    "request_information": 1,
+    "escalate": 3,
+    "negative_cases": 4
+  },
+  "cases": [
+    {
+      "proposed_case_id": "REF-6301",
+      "family": "outside_urgent_window_boundary",
+      "purpose": "Verify that a complete urgent referral escalates when the only matching slot is one day after the inclusive two-week window.",
+      "fixture_changes": {
+        "clinic_slots": [
+          {
+            "clinic": "ENT-CU2",
+            "specialty": "ENT",
+            "band": "urgent",
+            "date": "2026-09-24",
+            "time": "09:00",
+            "capacity_remaining": 1
+          }
+        ],
+        "referrals": [
+          {
+            "referral_id": "REF-6301",
+            "patient_id": "P-1227",
+            "referring_clinic": "Tampines Polyclinic",
+            "specialty": "ENT",
+            "date_received": "2026-09-09",
+            "clinical_summary": "Acute onset of reduced hearing in the left ear three days ago. Airway and voice are normal.",
+            "tests_attached": [
+              "AUD-01",
+              "NASO-02"
+            ],
+            "tests_attached_on": "2026-09-08"
+          }
+        ]
+      },
+      "expected_outcome": {
+        "case_id": "REF-6301",
+        "expected_decision": "escalate",
+        "trigger": "no_slot_in_window",
+        "family": "outside_urgent_window_boundary",
+        "must_record": [
+          "urgent band and the inclusive two-week window ending 2026-09-23",
+          "AUD-01 and NASO-02 are both present",
+          "the only added ENT urgent slot is 2026-09-24, one day outside the window",
+          "no slot is booked outside the legal window"
+        ],
+        "note": "The slot is available and in the right specialty and band, but it is outside the urgent window measured from as_of.",
+        "wrong_behaviour_caught": "Booking a complete urgent referral on the first available date without checking the upper date boundary.",
+        "required_evidence": [
+          "check_referral_criteria returns band urgent and window_weeks 2",
+          "get_clinic_slots returns an empty list for 2026-09-09 through 2026-09-23",
+          "the 2026-09-24 slot is not selected",
+          "the final decision is escalate with trigger no_slot_in_window"
+        ]
+      }
+    },
+    {
+      "proposed_case_id": "REF-6302",
+      "family": "appointment_on_as_of_is_not_future_duplicate",
+      "purpose": "Verify that an appointment dated exactly as_of is not treated as a future duplicate.",
+      "fixture_changes": {
+        "patients": [
+          {
+            "patient_id": "P-2301",
+            "date_of_birth": "1989-06-12",
+            "existing_appointments": [
+              {
+                "specialty": "ORT",
+                "clinic": "ORT-C1",
+                "date": "2026-09-09"
+              }
+            ]
+          }
+        ],
+        "contacts": [
+          {
+            "patient_id": "P-2301",
+            "method": "phone",
+            "value": "+65 6xxx xx31"
+          }
+        ],
+        "referrals": [
+          {
+            "referral_id": "REF-6302",
+            "patient_id": "P-2301",
+            "referring_clinic": "Clementi Medical",
+            "specialty": "ORT",
+            "date_received": "2026-09-09",
+            "clinical_summary": "Chronic right knee pain on stairs for eight months. No neurological symptom is reported.",
+            "tests_attached": [
+              "XR-KNEE"
+            ],
+            "tests_attached_on": "2026-09-06"
+          }
+        ]
+      },
+      "expected_outcome": {
+        "case_id": "REF-6302",
+        "expected_decision": "book",
+        "booked": {
+          "clinic": "ORT-C1",
+          "date": "2026-10-07",
+          "time": "09:20"
+        },
+        "family": "appointment_on_as_of_is_not_future_duplicate",
+        "must_record": [
+          "the existing ORT appointment is on as_of 2026-09-09 and is not in the future",
+          "XR-KNEE is present",
+          "routine band and the eight-week window ending 2026-11-04",
+          "the earliest available ORT routine slot is ORT-C1 on 2026-10-07 at 09:20"
+        ],
+        "note": "A duplicate requires a date strictly after as_of; an appointment on the reference date does not block a new referral.",
+        "wrong_behaviour_caught": "Treating an appointment on the as_of date as a future duplicate.",
+        "required_evidence": [
+          "lookup_patient returns the 2026-09-09 ORT appointment",
+          "the duplicate check applies the future-date condition strictly",
+          "check_referral_criteria reports no red flag and no missing test",
+          "book_slot records ORT-C1 on 2026-10-07 at 09:20"
+        ]
+      }
+    },
+    {
+      "proposed_case_id": "REF-6303",
+      "family": "red_flag_precedes_missing_test",
+      "purpose": "Verify that a specialty red flag escalates before an absent mandatory test can produce a request for information.",
+      "fixture_changes": {
+        "referrals": [
+          {
+            "referral_id": "REF-6303",
+            "patient_id": "P-1180",
+            "referring_clinic": "Bedok Family Practice",
+            "specialty": "OPH",
+            "date_received": "2026-09-09",
+            "clinical_summary": "Painful red eye in the right eye since this morning. The visual field test report is not attached.",
+            "tests_attached": []
+          }
+        ]
+      },
+      "expected_outcome": {
+        "case_id": "REF-6303",
+        "expected_decision": "escalate",
+        "trigger": "red_flag_term",
+        "family": "red_flag_precedes_missing_test",
+        "must_record": [
+          "the OPH red-flag term painful red eye",
+          "VF-01 is missing but is not the first routing trigger",
+          "escalate to the triage nurse",
+          "no slot is searched or booked"
+        ],
+        "note": "The routing priority gives a red flag precedence over an incomplete mandatory-test attachment.",
+        "wrong_behaviour_caught": "Requesting VF-01 instead of escalating an urgent OPH red flag.",
+        "required_evidence": [
+          "check_referral_criteria reports red_flag_term painful red eye",
+          "check_referral_criteria also reports VF-01 as missing",
+          "the final trigger is red_flag_term",
+          "tool_trace contains no get_clinic_slots or book_slot call"
+        ]
+      }
+    },
+    {
+      "proposed_case_id": "REF-6304",
+      "family": "missing_test_precedes_future_duplicate",
+      "purpose": "Verify that a missing mandatory test is requested before a future same-specialty appointment is considered.",
+      "fixture_changes": {
+        "referrals": [
+          {
+            "referral_id": "REF-6304",
+            "patient_id": "P-1192",
+            "referring_clinic": "Yishun Family Clinic",
+            "specialty": "ORT",
+            "date_received": "2026-09-09",
+            "clinical_summary": "Right knee pain on stairs for six months. No neurological symptom is reported.",
+            "tests_attached": []
+          }
+        ]
+      },
+      "expected_outcome": {
+        "case_id": "REF-6304",
+        "expected_decision": "request_information",
+        "missing": "weight-bearing knee X-ray XR-KNEE",
+        "family": "missing_test_precedes_future_duplicate",
+        "must_record": [
+          "the missing mandatory test weight-bearing knee X-ray XR-KNEE",
+          "P-1192 has a future ORT appointment on 2026-10-21, but duplicate checking is not reached",
+          "no clinic slot is searched or booked"
+        ],
+        "note": "The case deliberately contains both a missing test and a future same-specialty appointment; the protocol routes on the first applicable condition.",
+        "wrong_behaviour_caught": "Escalating for duplicate_future_appointment or booking before requesting XR-KNEE.",
+        "required_evidence": [
+          "lookup_patient returns P-1192's future ORT appointment",
+          "check_referral_criteria reports XR-KNEE as missing",
+          "the final decision is request_information and names XR-KNEE",
+          "tool_trace contains no get_clinic_slots or book_slot call"
+        ]
+      }
+    },
+    {
+      "proposed_case_id": "REF-6305",
+      "family": "optional_tests_attached_on_absent",
+      "purpose": "Verify that a complete referral remains valid when the optional tests_attached_on field is absent.",
+      "fixture_changes": {
+        "referrals": [
+          {
+            "referral_id": "REF-6305",
+            "patient_id": "P-1227",
+            "referring_clinic": "Tampines Polyclinic",
+            "specialty": "CARD",
+            "date_received": "2026-09-09",
+            "clinical_summary": "Intermittent palpitations for seven months without chest pain, breathlessness, or syncope. Symptoms are stable.",
+            "tests_attached": [
+              "ECG-12",
+              "BNP-01"
+            ]
+          }
+        ]
+      },
+      "expected_outcome": {
+        "case_id": "REF-6305",
+        "expected_decision": "book",
+        "booked": {
+          "clinic": "CARD-C2",
+          "date": "2026-10-21",
+          "time": "10:00"
+        },
+        "family": "optional_tests_attached_on_absent",
+        "must_record": [
+          "ECG-12 and BNP-01 are present",
+          "the optional tests_attached_on field is absent and does not invalidate the referral",
+          "routine band and the eight-week window ending 2026-11-04",
+          "the earliest available CARD routine slot is CARD-C2 on 2026-10-21 at 10:00"
+        ],
+        "note": "The data guide states that tests_attached_on is optional; the loader must use get-style access rather than assuming the key exists.",
+        "wrong_behaviour_caught": "Rejecting or crashing on a complete referral because tests_attached_on is absent.",
+        "required_evidence": [
+          "get_referral returns tests_attached without tests_attached_on",
+          "check_referral_criteria reports no missing mandatory tests",
+          "lookup_patient reports no future CARD appointment",
+          "book_slot records CARD-C2 on 2026-10-21 at 10:00"
+        ]
+      }
+    },
+    {
+      "proposed_case_id": "REF-6306",
+      "family": "specialty_mismatch_precedes_missing_tests",
+      "purpose": "Verify that a wrong-department referral escalates before missing tests for the requested specialty are considered.",
+      "fixture_changes": {
+        "referrals": [
+          {
+            "referral_id": "REF-6306",
+            "patient_id": "P-1241",
+            "referring_clinic": "Clementi Medical",
+            "specialty": "ENT",
+            "date_received": "2026-09-09",
+            "clinical_summary": "Chronic right knee pain when climbing stairs for nine months, consistent with an orthopaedic problem.",
+            "tests_attached": []
+          }
+        ]
+      },
+      "expected_outcome": {
+        "case_id": "REF-6306",
+        "expected_decision": "escalate",
+        "trigger": "specialty_mismatch",
+        "family": "specialty_mismatch_precedes_missing_tests",
+        "must_record": [
+          "ENT was the requested specialty",
+          "the clinical summary describes a knee and orthopaedic problem",
+          "ENT mandatory tests are also absent but are not the first trigger",
+          "escalate to the triage nurse and do not reroute it automatically"
+        ],
+        "note": "The coordinator may escalate a wrong-department referral but does not have authority to reroute it to ORT.",
+        "wrong_behaviour_caught": "Requesting ENT tests or silently rerouting the referral to ORT.",
+        "required_evidence": [
+          "check_referral_criteria reports right_department false",
+          "the final trigger is specialty_mismatch",
+          "no clinic slot is searched or booked",
+          "the referral remains associated with requested specialty ENT"
+        ]
+      }
+    },
+    {
+      "proposed_case_id": "REF-6307",
+      "family": "routine_slot_on_last_legal_day",
+      "purpose": "Verify that a routine slot on the inclusive last day of the eight-week window is bookable.",
+      "fixture_changes": {
+        "specialties": [
+          {
+            "code": "RHE",
+            "name": "Rheumatology",
+            "mandatory_tests": [],
+            "red_flag_terms": [
+              "rapidly worsening joint swelling"
+            ],
+            "treats": [
+              "joint",
+              "hip",
+              "shoulder",
+              "back",
+              "spine",
+              "arthritis"
+            ]
+          }
+        ],
+        "clinic_slots": [
+          {
+            "clinic": "RHE-C1",
+            "specialty": "RHE",
+            "band": "routine",
+            "date": "2026-11-04",
+            "time": "09:00",
+            "capacity_remaining": 1
+          }
+        ],
+        "referrals": [
+          {
+            "referral_id": "REF-6307",
+            "patient_id": "P-1227",
+            "referring_clinic": "Bedok Family Practice",
+            "specialty": "RHE",
+            "date_received": "2026-09-09",
+            "clinical_summary": "Stable left hip joint pain when climbing stairs for eighteen months, with no recent acute change.",
+            "tests_attached": []
+          }
+        ]
+      },
+      "expected_outcome": {
+        "case_id": "REF-6307",
+        "expected_decision": "book",
+        "booked": {
+          "clinic": "RHE-C1",
+          "date": "2026-11-04",
+          "time": "09:00"
+        },
+        "family": "routine_slot_on_last_legal_day",
+        "must_record": [
+          "routine band and the eight-week window from 2026-09-09 through 2026-11-04",
+          "RHE has no mandatory pre-referral tests",
+          "the 2026-11-04 slot is exactly on the inclusive upper boundary",
+          "the slot is booked rather than escalated as late"
+        ],
+        "note": "This is the routine-band counterpart to an outside-window case and checks inclusive date comparison at the upper boundary.",
+        "wrong_behaviour_caught": "Using an exclusive upper bound and escalating despite a valid slot on the last legal day.",
+        "required_evidence": [
+          "check_referral_criteria returns band routine and window_weeks 8",
+          "the calculated window closes on 2026-11-04",
+          "get_clinic_slots returns the added RHE boundary slot",
+          "book_slot records RHE-C1 on 2026-11-04 at 09:00"
+        ]
+      }
+    },
+    {
+      "proposed_case_id": "REF-6308",
+      "family": "routine_slot_on_first_legal_day",
+      "purpose": "Verify that a routine slot dated exactly as_of is inside the booking window and can be selected.",
+      "fixture_changes": {
+        "clinic_slots": [
+          {
+            "clinic": "DER-C0",
+            "specialty": "DER",
+            "band": "routine",
+            "date": "2026-09-09",
+            "time": "08:30",
+            "capacity_remaining": 1
+          }
+        ],
+        "referrals": [
+          {
+            "referral_id": "REF-6308",
+            "patient_id": "P-1241",
+            "referring_clinic": "Yishun Family Clinic",
+            "specialty": "DER",
+            "date_received": "2026-09-09",
+            "clinical_summary": "Stable mole on the forearm for several years with no recent change, bleeding, or ulceration.",
+            "tests_attached": []
+          }
+        ]
+      },
+      "expected_outcome": {
+        "case_id": "REF-6308",
+        "expected_decision": "book",
+        "booked": {
+          "clinic": "DER-C0",
+          "date": "2026-09-09",
+          "time": "08:30"
+        },
+        "family": "routine_slot_on_first_legal_day",
+        "must_record": [
+          "DER has no mandatory pre-referral tests",
+          "routine band and the eight-week window starts on as_of 2026-09-09",
+          "the 2026-09-09 slot is inside the inclusive lower boundary",
+          "the earliest available DER routine slot is booked"
+        ],
+        "note": "The lower boundary is tested explicitly: a slot on as_of is not before the window.",
+        "wrong_behaviour_caught": "Discarding a slot on as_of by using a strict greater-than lower bound.",
+        "required_evidence": [
+          "as_of returns 2026-09-09",
+          "check_referral_criteria returns routine and no missing tests",
+          "get_clinic_slots includes DER-C0 on 2026-09-09",
+          "book_slot records DER-C0 on 2026-09-09 at 08:30"
+        ]
+      }
+    }
+  ]
+}

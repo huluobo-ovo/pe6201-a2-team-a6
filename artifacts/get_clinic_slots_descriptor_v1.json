@@ -1,0 +1,12 @@
+{
+  "name": "get_clinic_slots",
+  "purpose": "Find clinic slots for a specialty.",
+  "when": "Use when appointment availability is needed.",
+  "args": {
+    "specialty": "specialty code",
+    "band": "urgency band",
+    "from/to": "date range"
+  },
+  "returns": "a list of matching slots",
+  "failure": "Returns an empty list when no slot is found."
+}

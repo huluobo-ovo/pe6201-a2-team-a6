@@ -191,6 +191,143 @@
     ],
     "note": "The long ordinary run. Compare its turn count with REF-5620's."
   },
+  {
+    "case_id": "REF-6401",
+    "expected_decision": "book",
+    "booked": {
+      "clinic": "OPH-C1",
+      "date": "2026-09-15",
+      "time": "09:40"
+    },
+    "family": "yupei_urgent_oph_booking",
+    "check_type": "code_and_judgement",
+    "must_record": [
+      "the phrase worsening over days selected the urgent band",
+      "urgent band and the 2-week window ending 2026-09-23",
+      "VF-01 present",
+      "no existing OPH appointment for P-2401"
+    ],
+    "note": "Catches a model that ignores urgency language and takes a later routine slot."
+  },
+  {
+    "case_id": "REF-6402",
+    "expected_decision": "book",
+    "booked": {
+      "clinic": "CARD-C3",
+      "date": "2026-09-25",
+      "time": "09:30"
+    },
+    "family": "yupei_soon_card_booking",
+    "check_type": "code",
+    "must_record": [
+      "the term recurrent selected the soon band",
+      "ECG-12 and BNP-01 both present",
+      "no existing CARD appointment for P-2402"
+    ],
+    "note": "Catches a model that treats all complete referrals as routine."
+  },
+  {
+    "case_id": "REF-6403",
+    "expected_decision": "book",
+    "booked": {
+      "clinic": "ORT-C3",
+      "date": "2026-09-28",
+      "time": "15:00"
+    },
+    "family": "yupei_soon_ort_booking",
+    "check_type": "code",
+    "must_record": [
+      "the phrase not responding to treatment selected the soon band",
+      "XR-KNEE present",
+      "no existing ORT appointment for P-2403"
+    ],
+    "note": "Catches a model that uses a routine ORT slot despite a four-week window."
+  },
+  {
+    "case_id": "REF-6404",
+    "expected_decision": "book",
+    "booked": {
+      "clinic": "DER-C2",
+      "date": "2026-09-24",
+      "time": "11:00"
+    },
+    "family": "yupei_no_mandatory_test_soon_booking",
+    "check_type": "code",
+    "must_record": [
+      "DER has no mandatory pre-referral tests",
+      "the term recurrent selected the soon band",
+      "no existing DER appointment for P-2404"
+    ],
+    "note": "Catches an invented test requirement or an unnecessary request for information."
+  },
+  {
+    "case_id": "REF-6405",
+    "expected_decision": "book",
+    "booked": {
+      "clinic": "ENT-C1",
+      "date": "2026-10-21",
+      "time": "13:20"
+    },
+    "family": "yupei_two_test_routine_booking",
+    "check_type": "code_and_judgement",
+    "must_record": [
+      "AUD-01 and NASO-02 both present",
+      "routine band and the 8-week window ending 2026-11-04",
+      "no existing ENT appointment for P-2405"
+    ],
+    "note": "Catches a grader that accepts the decision without evidence that both mandatory tests were checked."
+  },
+  {
+    "case_id": "REF-6406",
+    "expected_decision": "book",
+    "booked": {
+      "clinic": "ORT-C1",
+      "date": "2026-10-07",
+      "time": "09:20"
+    },
+    "family": "yupei_routine_ort_booking",
+    "check_type": "code",
+    "must_record": [
+      "XR-KNEE present",
+      "routine band and the 8-week window",
+      "no existing ORT appointment for P-2406"
+    ],
+    "note": "Catches a model that rejects a valid body-term match or books across bands."
+  },
+  {
+    "case_id": "REF-6407",
+    "expected_decision": "book",
+    "booked": {
+      "clinic": "CARD-C2",
+      "date": "2026-10-21",
+      "time": "10:00"
+    },
+    "family": "yupei_two_test_card_booking",
+    "check_type": "code_and_judgement",
+    "must_record": [
+      "ECG-12 and BNP-01 both present",
+      "routine band and the 8-week window ending 2026-11-04",
+      "no existing CARD appointment for P-2407"
+    ],
+    "note": "Catches a lucky correct booking whose explanation does not support the clinical window."
+  },
+  {
+    "case_id": "REF-6408",
+    "expected_decision": "book",
+    "booked": {
+      "clinic": "DER-C1",
+      "date": "2026-09-30",
+      "time": "10:40"
+    },
+    "family": "yupei_no_mandatory_test_routine_booking",
+    "check_type": "code",
+    "must_record": [
+      "DER has no mandatory pre-referral tests",
+      "routine band and the 8-week window",
+      "no existing DER appointment for P-2408"
+    ],
+    "note": "Catches an invented missing-test requirement on a specialty with an empty mandatory list."
+  },
 {
   "case_id": "REF-6801",
   "expected_decision": "book",
@@ -271,5 +408,24 @@
     "that AUD-01 was attached and does not satisfy it"
   ],
   "note": "A test from the shipped ENT pathway must not satisfy AUDX's mandatory test."
+},
+{
+  "case_id": "REF-6901",
+  "expected_decision": "book",
+  "booked": {
+    "clinic": "CARD-C1",
+    "date": "2026-09-16",
+    "time": "08:30"
+  },
+  "family": "team_integration_urgent_first_slot",
+  "check_type": "code",
+  "must_record": [
+    "the phrase rapidly worsening selected the urgent band",
+    "urgent band and the 2-week window ending 2026-09-23",
+    "ECG-12 and BNP-01 both present",
+    "the first available CARD urgent slot was booked",
+    "no existing CARD appointment for P-2901"
+  ],
+  "note": "D4-owner integration coverage: validates earliest-slot ordering on a complete urgent CARD referral; it is not counted among Fan Yupei's eight individually attributed cases."
 }
 ]

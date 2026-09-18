@@ -61,6 +61,9 @@ class GuardrailsTests(unittest.TestCase):
         self.assertTrue(confirm.gate("book", {"slot": "10:00"},
                                      approve=lambda *_: True))
         self.assertEqual(confirm.fired[-1]["guardrail"], "gate_passed")
+        self.assertFalse(confirm.gate("book", {"slot": "10:30"},
+                                      approve=lambda *_: "no"))
+        self.assertEqual(confirm.fired[-1]["guardrail"], "gate_held")
 
         act = Guardrails(2, 100, "act")
         self.assertTrue(act.gate("book", {"slot": "11:00"}))
