@@ -709,6 +709,10 @@ def write():
     with open(os.path.join(OUT, "as_of.json"), "w", encoding="utf-8") as fh:
         json.dump({"as_of": AS_OF}, fh, indent=2)
     print(f"       as_of.json  ({AS_OF})")
+    # Apply the reviewed team-owned cases after regenerating the base fixtures.
+    # The helper is idempotent and also updates expected_outcomes_B.json.
+    from integrate_team_cases import integrate
+    integrate()
     return tables
 
 
