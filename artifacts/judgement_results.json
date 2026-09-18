@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-09-14T19:27:33.206515+00:00",
-  "judge_model": "google/gemini-2.5-flash-lite",
-  "judge_model_family": "google",
+  "generated_at_utc": "2026-09-18T07:24:47.078184+00:00",
+  "judge_model": "mistralai/mistral-large",
+  "judge_model_family": "mistralai",
   "judge_prompt_file": "artifacts/JUDGEMENT_RUBRIC.md",
   "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
   "token_measurement": "api_reported",
@@ -21,34 +21,34 @@
             {
               "criterion": "the phrase worsening over days selected the urgent band",
               "met": true,
-              "reason": "The reason explicitly states 'worsening over days selected the urgent band'."
+              "reason": "The phrase 'worsening over days selected the urgent band' is explicitly present in the decision record."
             },
             {
               "criterion": "urgent band and the 2-week window ending 2026-09-23",
               "met": true,
-              "reason": "The reason states 'urgent band and 2-week window 2026-09-09 to 2026-09-23', which includes the specified end date."
+              "reason": "The decision record states 'urgent band and 2-week window 2026-09-09 to 2026-09-23', which matches the criterion."
             },
             {
               "criterion": "VF-01 present",
               "met": true,
-              "reason": "The reason explicitly states 'Mandatory tests present: VF-01'."
+              "reason": "The decision record explicitly mentions 'Mandatory tests present: VF-01'."
             },
             {
               "criterion": "no existing OPH appointment for P-2401",
               "met": true,
-              "reason": "The reason states 'P-2401 has no future OPH appointment'."
+              "reason": "The decision record states 'P-2401 has no future OPH appointment', which satisfies the criterion."
             }
           ],
           "verdict": true,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 513,
-            "completion_tokens": 366,
-            "total_tokens": 879,
-            "provider_cost_usd": 0.0001977
+            "prompt_tokens": 500,
+            "completion_tokens": 353,
+            "total_tokens": 853,
+            "provider_cost_usd": 0.003118
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": true,\n      \"reason\": \"The reason explicitly states 'worsening over days selected the urgent band'.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": true,\n      \"reason\": \"The reason states 'urgent band and 2-week window 2026-09-09 to 2026-09-23', which includes the specified end date.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": true,\n      \"reason\": \"The reason explicitly states 'Mandatory tests present: VF-01'.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": true,\n      \"reason\": \"The reason states 'P-2401 has no future OPH appointment'.\"\n    }\n  ],\n  \"verdict\": true,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": true,\n      \"reason\": \"The phrase 'worsening over days selected the urgent band' is explicitly present in the decision record.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": true,\n      \"reason\": \"The decision record states 'urgent band and 2-week window 2026-09-09 to 2026-09-23', which matches the criterion.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": true,\n      \"reason\": \"The decision record explicitly mentions 'Mandatory tests present: VF-01'.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": true,\n      \"reason\": \"The decision record states 'P-2401 has no future OPH appointment', which satisfies the criterion.\"\n    }\n  ],\n  \"verdict\": true,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         },
         {
           "case_id": "REF-6405",
@@ -56,29 +56,29 @@
             {
               "criterion": "AUD-01 and NASO-02 both present",
               "met": true,
-              "reason": "The reason explicitly states 'Mandatory tests present: AUD-01, NASO-02.'"
+              "reason": "Mandatory tests AUD-01 and NASO-02 are explicitly stated as present in the decision record."
             },
             {
               "criterion": "routine band and the 8-week window ending 2026-11-04",
               "met": true,
-              "reason": "The reason states 'selected the routine band and 8-week window 2026-09-09 to 2026-11-04', which includes the specified end date."
+              "reason": "The decision record specifies the selection of the routine band and the 8-week window from 2026-09-09 to 2026-11-04."
             },
             {
               "criterion": "no existing ENT appointment for P-2405",
               "met": true,
-              "reason": "The reason clearly states 'P-2405 has no future ENT appointment.'"
+              "reason": "The decision record explicitly states that P-2405 has no future ENT appointment."
             }
           ],
           "verdict": true,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 515,
-            "completion_tokens": 330,
-            "total_tokens": 845,
-            "provider_cost_usd": 0.0001835
+            "prompt_tokens": 503,
+            "completion_tokens": 308,
+            "total_tokens": 811,
+            "provider_cost_usd": 0.0022132
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": true,\n      \"reason\": \"The reason explicitly states 'Mandatory tests present: AUD-01, NASO-02.'\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": true,\n      \"reason\": \"The reason states 'selected the routine band and 8-week window 2026-09-09 to 2026-11-04', which includes the specified end date.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": true,\n      \"reason\": \"The reason clearly states 'P-2405 has no future ENT appointment.'\"\n    }\n  ],\n  \"verdict\": true,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": true,\n      \"reason\": \"Mandatory tests AUD-01 and NASO-02 are explicitly stated as present in the decision record.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": true,\n      \"reason\": \"The decision record specifies the selection of the routine band and the 8-week window from 2026-09-09 to 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": true,\n      \"reason\": \"The decision record explicitly states that P-2405 has no future ENT appointment.\"\n    }\n  ],\n  \"verdict\": true,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         },
         {
           "case_id": "REF-6407",
@@ -86,29 +86,29 @@
             {
               "criterion": "ECG-12 and BNP-01 both present",
               "met": true,
-              "reason": "The decision record explicitly states 'Mandatory tests present: ECG-12, BNP-01'."
+              "reason": "Mandatory tests listed in the decision record include ECG-12 and BNP-01."
             },
             {
               "criterion": "routine band and the 8-week window ending 2026-11-04",
               "met": true,
-              "reason": "The decision record states 'selected the routine band and 8-week window 2026-09-09 to 2026-11-04', which includes the specified end date."
+              "reason": "Decision record explicitly states 'routine band and 8-week window 2026-09-09 to 2026-11-04'."
             },
             {
               "criterion": "no existing CARD appointment for P-2407",
               "met": true,
-              "reason": "The decision record clearly states 'P-2407 has no future CARD appointment'."
+              "reason": "Decision record confirms 'P-2407 has no future CARD appointment'."
             }
           ],
           "verdict": true,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 514,
-            "completion_tokens": 332,
-            "total_tokens": 846,
-            "provider_cost_usd": 0.0001842
+            "prompt_tokens": 502,
+            "completion_tokens": 299,
+            "total_tokens": 801,
+            "provider_cost_usd": 0.0021572
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": true,\n      \"reason\": \"The decision record explicitly states 'Mandatory tests present: ECG-12, BNP-01'.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": true,\n      \"reason\": \"The decision record states 'selected the routine band and 8-week window 2026-09-09 to 2026-11-04', which includes the specified end date.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": true,\n      \"reason\": \"The decision record clearly states 'P-2407 has no future CARD appointment'.\"\n    }\n  ],\n  \"verdict\": true,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": true,\n      \"reason\": \"Mandatory tests listed in the decision record include ECG-12 and BNP-01.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": true,\n      \"reason\": \"Decision record explicitly states 'routine band and 8-week window 2026-09-09 to 2026-11-04'.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": true,\n      \"reason\": \"Decision record confirms 'P-2407 has no future CARD appointment'.\"\n    }\n  ],\n  \"verdict\": true,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         }
       ],
       "passed": 3,
@@ -128,34 +128,34 @@
             {
               "criterion": "the phrase worsening over days selected the urgent band",
               "met": false,
-              "reason": "The decision record does not contain information about the phrase 'worsening over days' or how it relates to the 'urgent band'."
+              "reason": "No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection."
             },
             {
               "criterion": "urgent band and the 2-week window ending 2026-09-23",
               "met": false,
-              "reason": "The decision record does not mention the 'urgent band' or the specific date '2026-09-23'."
+              "reason": "No mention of the urgent band or the 2-week window ending 2026-09-23 in the provided reason."
             },
             {
               "criterion": "VF-01 present",
               "met": false,
-              "reason": "The decision record does not contain any mention of 'VF-01'."
+              "reason": "No evidence in the provided reason regarding the presence or absence of VF-01."
             },
             {
               "criterion": "no existing OPH appointment for P-2401",
               "met": false,
-              "reason": "The decision record does not mention 'OPH appointment' or 'P-2401'."
+              "reason": "No evidence in the provided reason about the existence or absence of an OPH appointment for P-2401."
             }
           ],
           "verdict": false,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 470,
-            "completion_tokens": 364,
-            "total_tokens": 834,
-            "provider_cost_usd": 0.0001926
+            "prompt_tokens": 457,
+            "completion_tokens": 342,
+            "total_tokens": 799,
+            "provider_cost_usd": 0.0023252
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain information about the phrase 'worsening over days' or how it relates to the 'urgent band'.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention the 'urgent band' or the specific date '2026-09-23'.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain any mention of 'VF-01'.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention 'OPH appointment' or 'P-2401'.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": false,\n      \"reason\": \"No mention of the urgent band or the 2-week window ending 2026-09-23 in the provided reason.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason regarding the presence or absence of VF-01.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the existence or absence of an OPH appointment for P-2401.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         },
         {
           "case_id": "REF-6405",
@@ -163,29 +163,29 @@
             {
               "criterion": "AUD-01 and NASO-02 both present",
               "met": false,
-              "reason": "The decision record does not contain any information about AUD-01 or NASO-02."
+              "reason": "The provided reason does not contain specific evidence about the presence of AUD-01 and NASO-02."
             },
             {
               "criterion": "routine band and the 8-week window ending 2026-11-04",
               "met": false,
-              "reason": "The decision record does not mention a routine band or the 8-week window ending 2026-11-04."
+              "reason": "The provided reason does not contain specific evidence regarding the routine band or the 8-week window ending 2026-11-04."
             },
             {
               "criterion": "no existing ENT appointment for P-2405",
               "met": false,
-              "reason": "The decision record does not mention any information about ENT appointments for P-2405."
+              "reason": "The provided reason does not contain specific evidence about the absence of an existing ENT appointment for P-2405."
             }
           ],
           "verdict": false,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 465,
-            "completion_tokens": 315,
-            "total_tokens": 780,
-            "provider_cost_usd": 0.0001725
+            "prompt_tokens": 452,
+            "completion_tokens": 303,
+            "total_tokens": 755,
+            "provider_cost_usd": 0.0020812
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain any information about AUD-01 or NASO-02.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention a routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention any information about ENT appointments for P-2405.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain specific evidence about the presence of AUD-01 and NASO-02.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain specific evidence regarding the routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain specific evidence about the absence of an existing ENT appointment for P-2405.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         },
         {
           "case_id": "REF-6407",
@@ -193,29 +193,29 @@
             {
               "criterion": "ECG-12 and BNP-01 both present",
               "met": false,
-              "reason": "The decision record does not contain any information about ECG-12 or BNP-01."
+              "reason": "The decision record does not provide evidence of whether ECG-12 and BNP-01 are present or not."
             },
             {
               "criterion": "routine band and the 8-week window ending 2026-11-04",
               "met": false,
-              "reason": "The decision record does not mention a routine band or the specified 8-week window."
+              "reason": "The decision record does not contain specific evidence about the routine band or the 8-week window ending 2026-11-04."
             },
             {
               "criterion": "no existing CARD appointment for P-2407",
               "met": false,
-              "reason": "The decision record does not contain any information about CARD appointments for P-2407."
+              "reason": "The decision record does not provide evidence regarding the existence or absence of a CARD appointment for P-2407."
             }
           ],
           "verdict": false,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 465,
+            "prompt_tokens": 452,
             "completion_tokens": 303,
-            "total_tokens": 768,
-            "provider_cost_usd": 0.0001677
+            "total_tokens": 755,
+            "provider_cost_usd": 0.0020812
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain any information about ECG-12 or BNP-01.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention a routine band or the specified 8-week window.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain any information about CARD appointments for P-2407.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": false,\n      \"reason\": \"The decision record does not provide evidence of whether ECG-12 and BNP-01 are present or not.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain specific evidence about the routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": false,\n      \"reason\": \"The decision record does not provide evidence regarding the existence or absence of a CARD appointment for P-2407.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         }
       ],
       "passed": 0,
@@ -235,34 +235,34 @@
             {
               "criterion": "the phrase worsening over days selected the urgent band",
               "met": false,
-              "reason": "The decision record does not contain information about the phrase 'worsening over days' or how it relates to the 'urgent band'."
+              "reason": "No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection."
             },
             {
               "criterion": "urgent band and the 2-week window ending 2026-09-23",
               "met": false,
-              "reason": "The decision record does not mention the 'urgent band' or the specific date '2026-09-23'."
+              "reason": "No evidence in the provided reason about the urgent band or the 2-week window ending 2026-09-23."
             },
             {
               "criterion": "VF-01 present",
               "met": false,
-              "reason": "The decision record does not contain any mention of 'VF-01'."
+              "reason": "No evidence in the provided reason about VF-01 or its presence."
             },
             {
               "criterion": "no existing OPH appointment for P-2401",
               "met": false,
-              "reason": "The decision record does not mention 'OPH appointment' or 'P-2401'."
+              "reason": "No evidence in the provided reason about the absence of an existing OPH appointment for P-2401."
             }
           ],
           "verdict": false,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 470,
-            "completion_tokens": 364,
-            "total_tokens": 834,
-            "provider_cost_usd": 0.0001926
+            "prompt_tokens": 457,
+            "completion_tokens": 339,
+            "total_tokens": 796,
+            "provider_cost_usd": 0.0023072
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain information about the phrase 'worsening over days' or how it relates to the 'urgent band'.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention the 'urgent band' or the specific date '2026-09-23'.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain any mention of 'VF-01'.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention 'OPH appointment' or 'P-2401'.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the urgent band or the 2-week window ending 2026-09-23.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about VF-01 or its presence.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the absence of an existing OPH appointment for P-2401.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         },
         {
           "case_id": "REF-6405",
@@ -270,29 +270,29 @@
             {
               "criterion": "AUD-01 and NASO-02 both present",
               "met": false,
-              "reason": "The decision record does not contain any information about AUD-01 or NASO-02."
+              "reason": "No evidence in the provided reason about the presence of AUD-01 or NASO-02."
             },
             {
               "criterion": "routine band and the 8-week window ending 2026-11-04",
               "met": false,
-              "reason": "The decision record does not mention a routine band or the 8-week window ending 2026-11-04."
+              "reason": "No evidence in the provided reason about the routine band or the 8-week window."
             },
             {
               "criterion": "no existing ENT appointment for P-2405",
               "met": false,
-              "reason": "The decision record does not mention any information about ENT appointments for P-2405."
+              "reason": "No evidence in the provided reason about the absence of an existing ENT appointment for P-2405."
             }
           ],
           "verdict": false,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 465,
-            "completion_tokens": 315,
-            "total_tokens": 780,
-            "provider_cost_usd": 0.0001725
+            "prompt_tokens": 452,
+            "completion_tokens": 285,
+            "total_tokens": 737,
+            "provider_cost_usd": 0.0019732
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain any information about AUD-01 or NASO-02.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention a routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention any information about ENT appointments for P-2405.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the presence of AUD-01 or NASO-02.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the routine band or the 8-week window.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the absence of an existing ENT appointment for P-2405.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         },
         {
           "case_id": "REF-6407",
@@ -300,29 +300,457 @@
             {
               "criterion": "ECG-12 and BNP-01 both present",
               "met": false,
-              "reason": "The decision record does not contain any information about ECG-12 or BNP-01."
+              "reason": "The provided reason does not contain evidence regarding the presence or absence of ECG-12 and BNP-01."
             },
             {
               "criterion": "routine band and the 8-week window ending 2026-11-04",
               "met": false,
-              "reason": "The decision record does not mention a routine band or the specified 8-week window."
+              "reason": "The provided reason does not contain evidence regarding the routine band or the 8-week window ending 2026-11-04."
             },
             {
               "criterion": "no existing CARD appointment for P-2407",
               "met": false,
-              "reason": "The decision record does not contain any information about CARD appointments for P-2407."
+              "reason": "The provided reason does not contain evidence regarding the existence or absence of a CARD appointment for P-2407."
             }
           ],
           "verdict": false,
-          "graded_by": "model: google/gemini-2.5-flash-lite",
+          "graded_by": "model: mistralai/mistral-large",
           "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
           "usage": {
-            "prompt_tokens": 465,
-            "completion_tokens": 303,
-            "total_tokens": 768,
-            "provider_cost_usd": 0.0001677
+            "prompt_tokens": 452,
+            "completion_tokens": 302,
+            "total_tokens": 754,
+            "provider_cost_usd": 0.0020752
           },
-          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain any information about ECG-12 or BNP-01.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The decision record does not mention a routine band or the specified 8-week window.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": false,\n      \"reason\": \"The decision record does not contain any information about CARD appointments for P-2407.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: google/gemini-2.5-flash-lite\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the presence or absence of ECG-12 and BNP-01.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the existence or absence of a CARD appointment for P-2407.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        }
+      ],
+      "passed": 0,
+      "total": 3
+    },
+    {
+      "source_file": "artifacts/live_results/hao_qi_anthropic_claude-sonnet-4.6_v2.json",
+      "source_file_sha256": "2930d858232247faa4a621e8231815973d1fd20310588f5749de37420671f1e7",
+      "source_backend": "live",
+      "source_model": "anthropic/claude-sonnet-4.6",
+      "descriptor_version": "v2",
+      "freeze_sha": "e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+      "judgements": [
+        {
+          "case_id": "REF-6401",
+          "item_verdicts": [
+            {
+              "criterion": "the phrase worsening over days selected the urgent band",
+              "met": false,
+              "reason": "No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection."
+            },
+            {
+              "criterion": "urgent band and the 2-week window ending 2026-09-23",
+              "met": false,
+              "reason": "No evidence in the provided reason about the urgent band or the 2-week window ending 2026-09-23."
+            },
+            {
+              "criterion": "VF-01 present",
+              "met": false,
+              "reason": "No evidence in the provided reason about VF-01."
+            },
+            {
+              "criterion": "no existing OPH appointment for P-2401",
+              "met": false,
+              "reason": "No evidence in the provided reason about the absence of an existing OPH appointment for P-2401."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 457,
+            "completion_tokens": 336,
+            "total_tokens": 793,
+            "provider_cost_usd": 0.0022892
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the urgent band or the 2-week window ending 2026-09-23.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about VF-01.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the absence of an existing OPH appointment for P-2401.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        },
+        {
+          "case_id": "REF-6405",
+          "item_verdicts": [
+            {
+              "criterion": "AUD-01 and NASO-02 both present",
+              "met": false,
+              "reason": "The provided reason does not contain specific evidence about the presence of AUD-01 and NASO-02."
+            },
+            {
+              "criterion": "routine band and the 8-week window ending 2026-11-04",
+              "met": false,
+              "reason": "The provided reason does not include any evidence regarding a routine band or the 8-week window ending 2026-11-04."
+            },
+            {
+              "criterion": "no existing ENT appointment for P-2405",
+              "met": false,
+              "reason": "The provided reason does not reference any evidence about the absence of an existing ENT appointment for P-2405."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 452,
+            "completion_tokens": 303,
+            "total_tokens": 755,
+            "provider_cost_usd": 0.0020812
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain specific evidence about the presence of AUD-01 and NASO-02.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not include any evidence regarding a routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not reference any evidence about the absence of an existing ENT appointment for P-2405.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        },
+        {
+          "case_id": "REF-6407",
+          "item_verdicts": [
+            {
+              "criterion": "ECG-12 and BNP-01 both present",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the presence or absence of ECG-12 and BNP-01."
+            },
+            {
+              "criterion": "routine band and the 8-week window ending 2026-11-04",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the routine band or the 8-week window ending 2026-11-04."
+            },
+            {
+              "criterion": "no existing CARD appointment for P-2407",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the existence or absence of a CARD appointment for P-2407."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 452,
+            "completion_tokens": 302,
+            "total_tokens": 754,
+            "provider_cost_usd": 0.0020752
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the presence or absence of ECG-12 and BNP-01.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the existence or absence of a CARD appointment for P-2407.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        }
+      ],
+      "passed": 0,
+      "total": 3
+    },
+    {
+      "source_file": "artifacts/live_results/live_deepseek_v4_v2_liuxuanlin.json",
+      "source_file_sha256": "14b7c5c07ebce3102c58030a45956790f5b1de45272728d61d993cd716bb6321",
+      "source_backend": "live",
+      "source_model": "deepseek/deepseek-v4-pro",
+      "descriptor_version": "v2",
+      "freeze_sha": "e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+      "judgements": [
+        {
+          "case_id": "REF-6401",
+          "item_verdicts": [
+            {
+              "criterion": "the phrase worsening over days selected the urgent band",
+              "met": false,
+              "reason": "No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection."
+            },
+            {
+              "criterion": "urgent band and the 2-week window ending 2026-09-23",
+              "met": false,
+              "reason": "No evidence in the provided reason about the urgent band or the 2-week window ending 2026-09-23."
+            },
+            {
+              "criterion": "VF-01 present",
+              "met": false,
+              "reason": "No evidence in the provided reason about VF-01."
+            },
+            {
+              "criterion": "no existing OPH appointment for P-2401",
+              "met": false,
+              "reason": "No evidence in the provided reason about the absence of an existing OPH appointment for P-2401."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 457,
+            "completion_tokens": 336,
+            "total_tokens": 793,
+            "provider_cost_usd": 0.0022892
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the urgent band or the 2-week window ending 2026-09-23.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about VF-01.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the absence of an existing OPH appointment for P-2401.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        },
+        {
+          "case_id": "REF-6405",
+          "item_verdicts": [
+            {
+              "criterion": "AUD-01 and NASO-02 both present",
+              "met": false,
+              "reason": "The provided reason does not contain specific evidence about the presence of AUD-01 and NASO-02."
+            },
+            {
+              "criterion": "routine band and the 8-week window ending 2026-11-04",
+              "met": false,
+              "reason": "The provided reason does not include any evidence regarding a routine band or the 8-week window ending 2026-11-04."
+            },
+            {
+              "criterion": "no existing ENT appointment for P-2405",
+              "met": false,
+              "reason": "The provided reason does not reference any evidence about the absence of an existing ENT appointment for P-2405."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 452,
+            "completion_tokens": 303,
+            "total_tokens": 755,
+            "provider_cost_usd": 0.0020812
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain specific evidence about the presence of AUD-01 and NASO-02.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not include any evidence regarding a routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not reference any evidence about the absence of an existing ENT appointment for P-2405.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        },
+        {
+          "case_id": "REF-6407",
+          "item_verdicts": [
+            {
+              "criterion": "ECG-12 and BNP-01 both present",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the presence or absence of ECG-12 and BNP-01."
+            },
+            {
+              "criterion": "routine band and the 8-week window ending 2026-11-04",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the routine band or the 8-week window ending 2026-11-04."
+            },
+            {
+              "criterion": "no existing CARD appointment for P-2407",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the existence or absence of a CARD appointment for P-2407."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 452,
+            "completion_tokens": 302,
+            "total_tokens": 754,
+            "provider_cost_usd": 0.0020752
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the presence or absence of ECG-12 and BNP-01.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the existence or absence of a CARD appointment for P-2407.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        }
+      ],
+      "passed": 0,
+      "total": 3
+    },
+    {
+      "source_file": "artifacts/live_results/wang_chenyu_google_gemini-3.7-flash_v2.json",
+      "source_file_sha256": "c9f4950ca3a3c349ce2d5b4073b1ae888b871854eb778b6a98afc636ca20bde7",
+      "source_backend": "live",
+      "source_model": "google/gemini-3.7-flash",
+      "descriptor_version": "v2",
+      "freeze_sha": "e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+      "judgements": [
+        {
+          "case_id": "REF-6401",
+          "item_verdicts": [
+            {
+              "criterion": "the phrase worsening over days selected the urgent band",
+              "met": false,
+              "reason": "No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection."
+            },
+            {
+              "criterion": "urgent band and the 2-week window ending 2026-09-23",
+              "met": false,
+              "reason": "No mention of the urgent band or the 2-week window in the provided reason."
+            },
+            {
+              "criterion": "VF-01 present",
+              "met": false,
+              "reason": "No evidence in the provided reason regarding the presence or absence of VF-01."
+            },
+            {
+              "criterion": "no existing OPH appointment for P-2401",
+              "met": false,
+              "reason": "No evidence in the provided reason about the existence or absence of an OPH appointment for P-2401."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 457,
+            "completion_tokens": 330,
+            "total_tokens": 787,
+            "provider_cost_usd": 0.0022532
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the phrase 'worsening over days' or its impact on band selection.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": false,\n      \"reason\": \"No mention of the urgent band or the 2-week window in the provided reason.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason regarding the presence or absence of VF-01.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the existence or absence of an OPH appointment for P-2401.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        },
+        {
+          "case_id": "REF-6405",
+          "item_verdicts": [
+            {
+              "criterion": "AUD-01 and NASO-02 both present",
+              "met": false,
+              "reason": "No evidence provided in the decision record regarding the presence of AUD-01 or NASO-02."
+            },
+            {
+              "criterion": "routine band and the 8-week window ending 2026-11-04",
+              "met": false,
+              "reason": "No evidence provided in the decision record regarding a routine band or the specified 8-week window."
+            },
+            {
+              "criterion": "no existing ENT appointment for P-2405",
+              "met": false,
+              "reason": "No evidence provided in the decision record regarding the absence of an existing ENT appointment for P-2405."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 434,
+            "completion_tokens": 289,
+            "total_tokens": 723,
+            "provider_cost_usd": 0.0019612
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": false,\n      \"reason\": \"No evidence provided in the decision record regarding the presence of AUD-01 or NASO-02.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"No evidence provided in the decision record regarding a routine band or the specified 8-week window.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": false,\n      \"reason\": \"No evidence provided in the decision record regarding the absence of an existing ENT appointment for P-2405.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        },
+        {
+          "case_id": "REF-6407",
+          "item_verdicts": [
+            {
+              "criterion": "ECG-12 and BNP-01 both present",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the presence or absence of ECG-12 and BNP-01."
+            },
+            {
+              "criterion": "routine band and the 8-week window ending 2026-11-04",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the routine band or the 8-week window ending 2026-11-04."
+            },
+            {
+              "criterion": "no existing CARD appointment for P-2407",
+              "met": false,
+              "reason": "The provided reason does not contain evidence regarding the existence or absence of a CARD appointment for P-2407."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 452,
+            "completion_tokens": 302,
+            "total_tokens": 754,
+            "provider_cost_usd": 0.0020752
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the presence or absence of ECG-12 and BNP-01.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the routine band or the 8-week window ending 2026-11-04.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": false,\n      \"reason\": \"The provided reason does not contain evidence regarding the existence or absence of a CARD appointment for P-2407.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        }
+      ],
+      "passed": 0,
+      "total": 3
+    },
+    {
+      "source_file": "artifacts/live_results/yang_ruijia_moonshotai_kimi-k2.6_v2.json",
+      "source_file_sha256": "38ba514ef5e963fb5246a240281e3fadf48c35b307161cf965f0b2e71ba5ce34",
+      "source_backend": "live",
+      "source_model": "moonshotai/kimi-k2.6",
+      "descriptor_version": "v2",
+      "freeze_sha": "e36bb1b2fcad625ed944e7df863165d95c0ef53f",
+      "judgements": [
+        {
+          "case_id": "REF-6401",
+          "item_verdicts": [
+            {
+              "criterion": "the phrase worsening over days selected the urgent band",
+              "met": false,
+              "reason": "No evidence in the provided reason about the phrase 'worsening over days' or its relation to the urgent band selection."
+            },
+            {
+              "criterion": "urgent band and the 2-week window ending 2026-09-23",
+              "met": false,
+              "reason": "No evidence in the provided reason about the urgent band or the 2-week window ending 2026-09-23."
+            },
+            {
+              "criterion": "VF-01 present",
+              "met": false,
+              "reason": "No evidence in the provided reason about the presence of VF-01."
+            },
+            {
+              "criterion": "no existing OPH appointment for P-2401",
+              "met": false,
+              "reason": "No evidence in the provided reason about the absence of an existing OPH appointment for P-2401."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 457,
+            "completion_tokens": 341,
+            "total_tokens": 798,
+            "provider_cost_usd": 0.0023192
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6401\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"the phrase worsening over days selected the urgent band\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the phrase 'worsening over days' or its relation to the urgent band selection.\"\n    },\n    {\n      \"criterion\": \"urgent band and the 2-week window ending 2026-09-23\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the urgent band or the 2-week window ending 2026-09-23.\"\n    },\n    {\n      \"criterion\": \"VF-01 present\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the presence of VF-01.\"\n    },\n    {\n      \"criterion\": \"no existing OPH appointment for P-2401\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the absence of an existing OPH appointment for P-2401.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        },
+        {
+          "case_id": "REF-6405",
+          "item_verdicts": [
+            {
+              "criterion": "AUD-01 and NASO-02 both present",
+              "met": false,
+              "reason": "No evidence in the provided reason about the presence of AUD-01 or NASO-02."
+            },
+            {
+              "criterion": "routine band and the 8-week window ending 2026-11-04",
+              "met": false,
+              "reason": "No evidence in the provided reason about the routine band or the 8-week window."
+            },
+            {
+              "criterion": "no existing ENT appointment for P-2405",
+              "met": false,
+              "reason": "No evidence in the provided reason about the absence of an existing ENT appointment for P-2405."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 452,
+            "completion_tokens": 285,
+            "total_tokens": 737,
+            "provider_cost_usd": 0.0019732
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6405\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"AUD-01 and NASO-02 both present\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the presence of AUD-01 or NASO-02.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the routine band or the 8-week window.\"\n    },\n    {\n      \"criterion\": \"no existing ENT appointment for P-2405\",\n      \"met\": false,\n      \"reason\": \"No evidence in the provided reason about the absence of an existing ENT appointment for P-2405.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
+        },
+        {
+          "case_id": "REF-6407",
+          "item_verdicts": [
+            {
+              "criterion": "ECG-12 and BNP-01 both present",
+              "met": false,
+              "reason": "No evidence provided in the decision record regarding the presence of ECG-12 or BNP-01 tests."
+            },
+            {
+              "criterion": "routine band and the 8-week window ending 2026-11-04",
+              "met": false,
+              "reason": "No evidence provided in the decision record regarding the routine band or the 8-week window."
+            },
+            {
+              "criterion": "no existing CARD appointment for P-2407",
+              "met": false,
+              "reason": "No evidence provided in the decision record regarding the absence of an existing CARD appointment for P-2407."
+            }
+          ],
+          "verdict": false,
+          "graded_by": "model: mistralai/mistral-large",
+          "judge_prompt_sha256": "8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321",
+          "usage": {
+            "prompt_tokens": 452,
+            "completion_tokens": 288,
+            "total_tokens": 740,
+            "provider_cost_usd": 0.0019912
+          },
+          "raw_response": "{\n  \"case_id\": \"REF-6407\",\n  \"item_verdicts\": [\n    {\n      \"criterion\": \"ECG-12 and BNP-01 both present\",\n      \"met\": false,\n      \"reason\": \"No evidence provided in the decision record regarding the presence of ECG-12 or BNP-01 tests.\"\n    },\n    {\n      \"criterion\": \"routine band and the 8-week window ending 2026-11-04\",\n      \"met\": false,\n      \"reason\": \"No evidence provided in the decision record regarding the routine band or the 8-week window.\"\n    },\n    {\n      \"criterion\": \"no existing CARD appointment for P-2407\",\n      \"met\": false,\n      \"reason\": \"No evidence provided in the decision record regarding the absence of an existing CARD appointment for P-2407.\"\n    }\n  ],\n  \"verdict\": false,\n  \"graded_by\": \"model: mistralai/mistral-large\",\n  \"judge_prompt_sha256\": \"8e0483e04df786da398bec445718c9ad91dff7adbbfac7dcdcc2703afad78321\"\n}"
         }
       ],
       "passed": 0,
