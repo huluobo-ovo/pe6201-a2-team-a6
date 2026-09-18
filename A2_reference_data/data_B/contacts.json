@@ -108,5 +108,20 @@
     "patient_id": "P-2901",
     "method": "phone",
     "value": "+65 6000 2901"
+  },
+  {
+    "patient_id": "P-2101",
+    "method": "sms",
+    "value": "+65 9xxx xx15"
+  },
+  {
+    "patient_id": "P-2202",
+    "method": "sms",
+    "value": "+65 9xxx xx22"
+  },
+  {
+    "patient_id": "P-2301",
+    "method": "phone",
+    "value": "+65 6xxx xx31"
   }
 ]

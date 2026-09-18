@@ -17,6 +17,23 @@ run once and negative cases run three times. It writes
 counts, code-check pass rates, negative-only results, turns, tokens, costs,
 errors, per-case rows, and the separate judgement queue.
 
+The current reviewed set contains 50 cases. Twenty team-owned proposals were
+integrated after validation: eight from Yang Ruijia, seven from Wang Chenyu and
+five from Hao Qi. Four additional proposals remain documented but unexecuted so
+the set does not exceed the assignment's 50-case maximum. See
+`artifacts/team_case_integration_summary.md`. To regenerate the expanded data
+and labels from the committed proposal sources:
+
+```bash
+python3 A2_reference_data/make_fixtures_B.py
+python3 A2_reference_data/check_my_data.py
+```
+
+The committed live-model files were produced on the earlier 30-case freeze.
+They remain immutable historical evidence and must not be described as covering
+the expanded 50-case set. A new compatible D5(b) battery requires every model to
+run against the new freeze and exact 50-case list.
+
 ## Which result file to use
 
 | Purpose | File |
