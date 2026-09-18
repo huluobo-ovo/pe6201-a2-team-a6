@@ -34,11 +34,18 @@ They remain immutable historical evidence and must not be described as covering
 the expanded 50-case set. A new compatible D5(b) battery requires every model to
 run against the new freeze and exact 50-case list.
 
+The expanded-set baseline is recorded separately in
+`artifacts/expanded_50_case_freeze_manifest.json` and
+`artifacts/expanded_50_case_results.json`: all 90 scripted trials pass, while
+the three prose-evidence judgement items remain pending. These files do not
+replace the required five-model live battery.
+
 ## Which result file to use
 
 | Purpose | File |
 | --- | --- |
-| School-required default scripted result, D5(a) | `artifacts/results.json` |
+| Current expanded 50-case scripted result, D5(a) | `artifacts/expanded_50_case_results.json` |
+| Historical 30-case scripted result | `artifacts/results.json` |
 | Fan Yupei final GPT-5.4 live result, D5(b) | `artifacts/live_results/fan_yupei_openai_gpt-5.4_v2.json` |
 | Controlled descriptor-v1 baseline, D2(b) | `artifacts/live_results/fan_yupei_openai_gpt-5.4_v1.json` |
 | Liu Xuanlin D6 input and per-trial fallback audit | `artifacts/fan_yupei_live_handoff.json` and `artifacts/live_cost_handoff.csv` |
