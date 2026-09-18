@@ -135,7 +135,11 @@ and is reported rather than hidden.
 | GPT-5.4 v1 descriptor | 20/58 (34.5%) | 20/42 (47.6%) | 0/3 | 2.0 | 234,496 / 9,653 | US$0.731035 | 28 |
 | GPT-5.4 v2 descriptor | 25/58 (43.1%) | 21/42 (50.0%) | 0/3 | 2.0 | 287,085 / 10,898 | US$0.881183 | 22 |
 
-The team-level D5 battery is not complete until the remaining declared v2
-model results are placed in `artifacts/live_results/` and pass the aggregator's
-compatibility checks. Raw result queues retain their original null verdicts;
-the completed, named judgements are in `artifacts/judgement_results.json`.
+The team-level D5 battery is complete. Five final-v2 model results are present
+in `artifacts/live_results/` and pass the common-freeze compatibility checks;
+the GPT-5.4 descriptor-v1 arm remains the separate D2(b) control. The complete
+table is in `artifacts/live_battery_summary.*` and the report-ready synthesis is
+in `artifacts/D4_D5_REPORT_READY.md`. Raw result queues retain their original
+null verdicts; the completed, named judgements are in
+`artifacts/judgement_results.json`. Every final-v2 live model passed 0/3 selected
+prose-evidence judgement cases, reported separately from code pass rates.
